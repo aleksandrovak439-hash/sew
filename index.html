@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>Утверждение второго плана — Счастье этажом выше</title>
+  <title>Утверждение второго плана</title>
   <style>
     * {
       margin: 0;
@@ -12,66 +12,79 @@
     }
 
     body {
-      background: #050505;
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, sans-serif;
-      color: #f2f2f2;
+      background: #0b0b0b;
+      font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+      color: #f0f0f0;
+      padding: 16px;
       min-height: 100vh;
-      padding: 0 16px 20px;
     }
 
     .app-header {
-      padding: 24px 0 12px;
-      border-bottom: 1px solid rgba(255,255,255,0.06);
-      margin-bottom: 12px;
-      background: rgba(5,5,5,0.9);
-      backdrop-filter: blur(10px);
-      position: sticky;
-      top: 0;
-      z-index: 10;
+      margin-bottom: 16px;
     }
 
     .app-header h1 {
-      font-size: 28px;
+      font-size: 24px;
       font-weight: 700;
-      letter-spacing: -0.5px;
-      background: linear-gradient(135deg, #FFFFFF, #B0B0B0);
+      background: linear-gradient(135deg, #fff, #aaa);
       -webkit-background-clip: text;
       background-clip: text;
       color: transparent;
     }
 
     .app-header .sub {
-      font-size: 15px;
-      color: #aaa;
-      margin-top: 4px;
-      font-weight: 400;
-      letter-spacing: 0.3px;
+      font-size: 14px;
+      color: #888;
+      margin-top: 2px;
     }
 
-    .date-section {
-      margin: 24px 0 12px;
-    }
-
-    .date-title {
-      font-size: 22px;
-      font-weight: 600;
-      color: #f0f0f0;
-      background: rgba(255,255,255,0.04);
-      padding: 10px 18px;
-      border-radius: 40px;
-      display: inline-block;
-      backdrop-filter: blur(4px);
+    /* ---- Блок утверждённых (вверху) ---- */
+    #approvedSection {
+      background: #141416;
+      border-radius: 16px;
+      padding: 16px;
+      margin-bottom: 24px;
       border: 1px solid rgba(255,255,255,0.06);
-      margin-bottom: 8px;
     }
 
-    .role-block {
-      margin: 18px 0 24px;
-    }
-
-    .role-title {
+    #approvedSection h2 {
       font-size: 18px;
-      font-weight: 500;
+      font-weight: 600;
+      color: #f1c40f;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .approved-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px 12px;
+    }
+
+    .approved-item {
+      background: #1c1c1e;
+      padding: 6px 14px;
+      border-radius: 30px;
+      font-size: 14px;
+      border: 1px solid rgba(255,255,255,0.04);
+    }
+
+    .empty-approved {
+      color: #6c6c70;
+      font-style: italic;
+      font-size: 14px;
+    }
+
+    /* ---- Главный экран (список ролей) ---- */
+    #mainScreen .date-group {
+      margin-bottom: 28px;
+    }
+
+    #mainScreen .date-label {
+      font-size: 18px;
+      font-weight: 600;
       color: #ccc;
       margin-bottom: 12px;
       padding-left: 4px;
@@ -79,109 +92,152 @@
       padding-left: 12px;
     }
 
-    .candidate-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    .role-btn {
+      display: block;
+      width: 100%;
+      background: #1c1c1e;
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 16px;
+      padding: 14px 18px;
+      margin-bottom: 10px;
+      color: #fff;
+      font-size: 17px;
+      font-weight: 500;
+      text-align: left;
+      cursor: pointer;
+      transition: 0.15s;
+    }
+
+    .role-btn:active {
+      transform: scale(0.97);
+      background: #2a2a2c;
+    }
+
+    .role-btn .badge {
+      float: right;
+      background: #2c2c2e;
+      padding: 2px 12px;
+      border-radius: 20px;
+      font-size: 13px;
+      color: #aaa;
+    }
+
+    /* ---- Экран кандидатов ---- */
+    .screen {
+      display: none;
+    }
+
+    .screen.active {
+      display: block;
+    }
+
+    .back-btn {
+      background: none;
+      border: none;
+      color: #f1c40f;
+      font-size: 18px;
+      font-weight: 500;
+      padding: 8px 0 16px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .candidate-list {
+      display: flex;
+      flex-direction: column;
       gap: 16px;
     }
 
     .candidate-card {
-      background: #121212;
+      background: #141416;
       border-radius: 20px;
-      padding: 12px;
+      padding: 14px;
       border: 1px solid rgba(255,255,255,0.04);
-      transition: 0.2s;
       display: flex;
-      flex-direction: column;
-    }
-
-    .candidate-card:hover {
-      border-color: rgba(255,255,255,0.15);
-      background: #1a1a1a;
+      gap: 14px;
+      align-items: flex-start;
     }
 
     .candidate-photo {
-      width: 100%;
-      aspect-ratio: 3 / 4;
+      width: 80px;
+      height: 106px;
+      flex-shrink: 0;
       border-radius: 14px;
       overflow: hidden;
       background: #2a2a2c;
-      margin-bottom: 10px;
-      position: relative;
       cursor: pointer;
+      position: relative;
     }
 
     .candidate-photo img {
       width: 100%;
       height: 100%;
       object-fit: cover;
-      display: block;
     }
 
-    .photo-placeholder {
+    .candidate-photo .placeholder {
       position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
+      inset: 0;
       display: flex;
       align-items: center;
       justify-content: center;
       color: #6c6c70;
-      font-size: 14px;
+      font-size: 12px;
       background: #1e1e1e;
       text-align: center;
-      padding: 10px;
+      padding: 6px;
+    }
+
+    .candidate-info {
+      flex: 1;
+      min-width: 0;
     }
 
     .candidate-name {
-      font-weight: 600;
       font-size: 16px;
-      margin-bottom: 3px;
+      font-weight: 600;
+      margin-bottom: 4px;
     }
 
     .candidate-details {
       font-size: 13px;
       color: #aaa;
-      line-height: 1.5;
-      flex: 1;
+      line-height: 1.4;
+      margin-bottom: 8px;
     }
 
     .video-btn {
-      display: inline-block;
-      margin-top: 10px;
-      background: #2c2c2e;
-      color: white;
+      background: #2c6b9e;
+      color: #fff;
       border: none;
       border-radius: 30px;
-      padding: 8px 16px;
-      font-size: 13px;
-      font-weight: 500;
+      padding: 8px 18px;
+      font-size: 14px;
+      font-weight: 600;
       cursor: pointer;
-      transition: 0.2s;
-      align-self: flex-start;
-      text-decoration: none;
-    }
-
-    .video-btn:hover {
-      background: #3a3a3c;
+      transition: 0.15s;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
     }
 
     .video-btn:active {
-      transform: scale(0.96);
+      transform: scale(0.95);
+      background: #1f4a6e;
     }
 
     .empty-message {
       color: #6c6c70;
       font-style: italic;
-      padding: 12px 0;
-      background: rgba(255,255,255,0.02);
-      border-radius: 12px;
+      padding: 24px 0;
       text-align: center;
-      font-size: 15px;
+      background: rgba(255,255,255,0.02);
+      border-radius: 16px;
     }
 
-    /* Модальные окна */
+    /* ---- Модалка видео ---- */
     .modal {
       display: none;
       position: fixed;
@@ -194,44 +250,36 @@
       justify-content: center;
       align-items: center;
       backdrop-filter: blur(12px);
-      cursor: pointer;
       padding: 20px;
+      cursor: pointer;
     }
 
     .modal-content {
-      background: #121212;
-      border-radius: 24px;
-      max-width: 90vw;
-      max-height: 90vh;
+      background: #0b0b0b;
+      border-radius: 20px;
+      max-width: 95vw;
+      max-height: 95vh;
       position: relative;
       cursor: default;
       overflow: hidden;
     }
 
-    .modal-img {
-      display: block;
-      max-width: 90vw;
-      max-height: 85vh;
-      object-fit: contain;
-      border-radius: 24px;
-    }
-
     .modal-video {
-      width: 80vw;
-      max-width: 1000px;
-      height: 45vw;
-      max-height: 80vh;
+      width: 90vw;
+      max-width: 800px;
+      height: 50vw;
+      max-height: 75vh;
       border: none;
-      border-radius: 16px;
+      border-radius: 12px;
       background: #000;
     }
 
-    .close-modal {
+    .modal-close {
       position: absolute;
-      top: 12px;
-      right: 16px;
+      top: 8px;
+      right: 12px;
       font-size: 28px;
-      color: white;
+      color: #fff;
       cursor: pointer;
       background: rgba(0,0,0,0.5);
       width: 36px;
@@ -240,37 +288,53 @@
       align-items: center;
       justify-content: center;
       border-radius: 40px;
-      transition: 0.2s;
+      transition: 0.15s;
       z-index: 10;
     }
 
-    .close-modal:hover {
+    .modal-close:hover {
       background: #ff3b30;
     }
 
+    /* ---- Модалка фото ---- */
+    .modal-img {
+      display: block;
+      max-width: 90vw;
+      max-height: 85vh;
+      object-fit: contain;
+      border-radius: 16px;
+    }
+
+    /* ---- Адаптив ---- */
     @media (max-width: 480px) {
-      .candidate-grid {
-        grid-template-columns: 1fr 1fr;
+      .candidate-card {
+        padding: 12px;
         gap: 12px;
       }
-      .candidate-card {
-        padding: 10px;
+      .candidate-photo {
+        width: 70px;
+        height: 93px;
       }
       .candidate-name {
-        font-size: 14px;
+        font-size: 15px;
       }
       .candidate-details {
         font-size: 12px;
       }
-      .modal-video {
-        width: 95vw;
-        height: 54vw;
+      .video-btn {
+        font-size: 13px;
+        padding: 6px 14px;
+      }
+      .approved-item {
+        font-size: 13px;
+        padding: 4px 12px;
       }
     }
 
     @media (max-width: 380px) {
-      .candidate-grid {
-        grid-template-columns: 1fr;
+      .candidate-photo {
+        width: 60px;
+        height: 80px;
       }
     }
   </style>
@@ -283,22 +347,38 @@
     <div class="sub">Проект «Счастье этажом выше»</div>
   </div>
 
-  <div id="content"></div>
-</div>
+  <!-- БЛОК УТВЕРЖДЁННЫХ (всегда виден сверху) -->
+  <div id="approvedSection">
+    <h2>✅ Утверждённые</h2>
+    <div id="approvedList" class="approved-list"></div>
+  </div>
 
-<!-- Модалка для фото -->
-<div id="photoModal" class="modal" onclick="closeModal('photoModal')">
-  <div class="modal-content" onclick="event.stopPropagation()">
-    <span class="close-modal" onclick="closeModal('photoModal')">×</span>
-    <img id="modalImg" class="modal-img" src="" alt="фото">
+  <!-- ГЛАВНЫЙ ЭКРАН: список ролей -->
+  <div id="mainScreen" class="screen active">
+    <div id="rolesContainer"></div>
+  </div>
+
+  <!-- ЭКРАН КАНДИДАТОВ (по роли) -->
+  <div id="candidatesScreen" class="screen">
+    <button class="back-btn" onclick="goBack()">← Назад</button>
+    <h2 id="candidatesTitle" style="font-size:20px; margin-bottom:16px;"></h2>
+    <div id="candidatesList" class="candidate-list"></div>
   </div>
 </div>
 
-<!-- Модалка для видео -->
-<div id="videoModal" class="modal" onclick="closeModal('videoModal')">
+<!-- Модалка видео -->
+<div id="videoModal" class="modal" onclick="closeVideoModal()">
   <div class="modal-content" onclick="event.stopPropagation()">
-    <span class="close-modal" onclick="closeModal('videoModal')">×</span>
+    <span class="modal-close" onclick="closeVideoModal()">×</span>
     <iframe id="videoIframe" class="modal-video" src="" allowfullscreen allow="autoplay; encrypted-media; fullscreen; picture-in-picture; screen-wake-lock;"></iframe>
+  </div>
+</div>
+
+<!-- Модалка фото -->
+<div id="photoModal" class="modal" onclick="closePhotoModal()">
+  <div class="modal-content" onclick="event.stopPropagation()">
+    <span class="modal-close" onclick="closePhotoModal()">×</span>
+    <img id="modalPhoto" class="modal-img" src="" alt="фото">
   </div>
 </div>
 
@@ -306,127 +386,192 @@
   // --------------------------------------------------------------
   // ДАННЫЕ
   // --------------------------------------------------------------
-  const data = {
-    "28.06": {
-      roles: {
-        "Охранник": [
-          { name: "Александр Иванов", details: "Рост: 176 см, одежда: 52, обувь: 42", video: "https://vkvideo.ru/video_ext.php?oid=-221927186&id=456239119&hash=4fd94497c69c3606&hd=3" },
-          { name: "Ефремов Виктор Ильич", details: "Рост: 175 см, одежда: 48, обувь: 42", video: "https://vkvideo.ru/video_ext.php?oid=-221927186&id=456239118&hash=c37c7a54e13ef74a&hd=3" },
-          { name: "Драница Виталий Анатольевич", details: "47 лет, рост: 175 см, одежда: 52, обувь: 40", video: "https://vkvideo.ru/video_ext.php?oid=-221927186&id=456239117&hash=48f988ee1f388d10&hd=4" },
-          { name: "Пономарев Алексей Юрьевич", details: "37 лет, рост: 178 см, одежда: 52, обувь: 43", video: "https://vkvideo.ru/video_ext.php?oid=-221927186&id=456239120&hash=a594cead6cc31a66&hd=3" },
-          { name: "Никулин Игорь", details: "Рост: 182 см, одежда: 50, обувь: 43", video: "https://vk.com/video_ext.php?oid=563995003&id=456239045&hash=a47d7fedd55b04e0&autoplay=1" }
-        ],
-        "Сказитель, Кощей, Царевна, Царевич": [
-          { name: "Комлев Даниил", details: "6 лет, рост: 115 см", video: "https://vkvideo.ru/video_ext.php?oid=-221927186&id=456239121&hash=dda16f427cdf5377&hd=3" },
-          { name: "Комлева София", details: "8 лет, рост: 130 см", video: "https://vkvideo.ru/video_ext.php?oid=-221927186&id=456239121&hash=dda16f427cdf5377&hd=3" },
-          { name: "Саркисян Артур", details: "8 лет, рост: 136 см, одежда: 142, обувь: 35 (Царевич или Сказитель)", video: "https://vkvideo.ru/video_ext.php?oid=-221927186&id=456239122&hash=80b30056a9a50bd2&hd=3" },
-          { name: "Алиса Петрова", details: "10 лет, рост: 136 см", video: "https://vkvideo.ru/video_ext.php?oid=-221927186&id=456239123&hash=2bb659356fa2de9d&hd=3" },
-          { name: "Шеина Майя", details: "8 лет, рост: 131 см, одежда: 128–134, обувь: 33", video: "https://vkvideo.ru/video_ext.php?oid=-221927186&id=456239124&hash=71a4ae1a7b330163&hd=3" },
-          { name: "Петров Даниил", details: "9 лет, рост: 140 см, одежда: 140, обувь: 35", video: "https://vkvideo.ru/video_ext.php?oid=-221927186&id=456239125&hash=c51b15618d9eae0b&hd=3" },
-          { name: "Сидоров Арсений", details: "9 лет, рост: 135 см, обувь: 36", video: "https://vkvideo.ru/video_ext.php?oid=-221927186&id=456239126&hash=705fc90a74151f26&hd=3" },
-          { name: "Котов Лука", details: "9 лет, рост: 135 см", video: "https://vkvideo.ru/video_ext.php?oid=-221927186&id=456239127&hash=f2c13872346f0bb5&hd=3" },
-          { name: "Дайлид Теодор", details: "Данные не указаны", video: "https://vkvideo.ru/video_ext.php?oid=-221927186&id=456239129&hash=a629bed70d136b52&hd=3" }
-        ]
-      }
+  const rolesData = [
+    {
+      date: "28.06",
+      role: "Охранник",
+      candidates: [
+        { name: "Александр Иванов", details: "Рост: 176 см, одежда: 52, обувь: 42", video: "https://vkvideo.ru/video_ext.php?oid=-221927186&id=456239119&hash=4fd94497c69c3606&hd=3" },
+        { name: "Ефремов Виктор", details: "Рост: 175 см, одежда: 48, обувь: 42", video: "https://vkvideo.ru/video_ext.php?oid=-221927186&id=456239118&hash=c37c7a54e13ef74a&hd=3" },
+        { name: "Драница Виталий", details: "47 лет, рост: 175 см, одежда: 52, обувь: 40", video: "https://vkvideo.ru/video_ext.php?oid=-221927186&id=456239117&hash=48f988ee1f388d10&hd=4" },
+        { name: "Пономарев Алексей Юрьевич", details: "37 лет, рост: 178 см, одежда: 52, обувь: 43", video: "https://vkvideo.ru/video_ext.php?oid=-221927186&id=456239120&hash=a594cead6cc31a66&hd=3" },
+        { name: "Никулин Игорь", details: "Рост: 182 см, одежда: 50, обувь: 43", video: "https://vk.com/video_ext.php?oid=563995003&id=456239045&hash=a47d7fedd55b04e0&autoplay=1" }
+      ]
     },
-    "30.06": {
-      roles: {
-        "Мастер 1, Мастер 2": [
-          { name: "Гененрайх Кирилл Алексеевич", details: "37 лет, рост: 180 см, одежда: 50, обувь: 44", video: "https://vkvideo.ru/video_ext.php?oid=-221927186&id=456239130&hash=1a7400700c1b8bf3&hd=3" },
-          { name: "Дмитрий Кюсснер", details: "Данные не указаны", video: "https://vkvideo.ru/video_ext.php?oid=-221927186&id=456239131&hash=e961998d91cbcc82&hd=3" },
-          { name: "Кряхтунов Сергей Игоревич", details: "Рост: 185 см, одежда: 50, обувь: 43", video: "https://vkvideo.ru/video_ext.php?oid=-221927186&id=456239132&hash=8ecba5a73b23e089&hd=3" },
-          { name: "Балашов Артур", details: "27 лет, рост: 186 см, одежда (верх): XL, низ: 36, обувь: 43–44", video: "https://vkvideo.ru/video_ext.php?oid=-221927186&id=456239133&hash=5fbf8a57b12c70f4&hd=3" },
-          { name: "Сокольников Андрей", details: "39 лет, рост: 180 см, одежда: 48, обувь: 42", video: "https://vkvideo.ru/video_ext.php?oid=-221927186&id=456239134&hash=557ec890f2054ba0&hd=3" },
-          { name: "Балыбердин Александр", details: "34 года, рост: 176 см, одежда: 48, обувь: 42", video: "https://vkvideo.ru/video_ext.php?oid=-221927186&id=456239135&hash=a9da016ff441d449&hd=3" }
-        ]
-      }
+    {
+      date: "28.06",
+      role: "Сказитель, Кощей, Царевна, Царевич",
+      candidates: [
+        { name: "Комлев Даниил", details: "6 лет, рост: 115 см", video: "https://vkvideo.ru/video_ext.php?oid=-221927186&id=456239121&hash=dda16f427cdf5377&hd=3" },
+        { name: "Комлева София", details: "8 лет, рост: 130 см", video: "https://vkvideo.ru/video_ext.php?oid=-221927186&id=456239121&hash=dda16f427cdf5377&hd=3" },
+        { name: "Саркисян Артур", details: "8 лет, рост: 136 см, одежда: 142, обувь: 35 (Царевич или Сказитель)", video: "https://vkvideo.ru/video_ext.php?oid=-221927186&id=456239122&hash=80b30056a9a50bd2&hd=3" },
+        { name: "Алиса Петрова", details: "10 лет, рост: 136 см", video: "https://vkvideo.ru/video_ext.php?oid=-221927186&id=456239123&hash=2bb659356fa2de9d&hd=3" },
+        { name: "Шеина Майя", details: "8 лет, рост: 131 см, одежда: 128–134, обувь: 33", video: "https://vkvideo.ru/video_ext.php?oid=-221927186&id=456239124&hash=71a4ae1a7b330163&hd=3" },
+        { name: "Петров Даниил", details: "9 лет, рост: 140 см, одежда: 140, обувь: 35", video: "https://vkvideo.ru/video_ext.php?oid=-221927186&id=456239125&hash=c51b15618d9eae0b&hd=3" },
+        { name: "Сидоров Арсений", details: "9 лет, рост: 135 см, обувь: 36", video: "https://vkvideo.ru/video_ext.php?oid=-221927186&id=456239126&hash=705fc90a74151f26&hd=3" },
+        { name: "Котов Лука", details: "9 лет, рост: 135 см", video: "https://vkvideo.ru/video_ext.php?oid=-221927186&id=456239127&hash=f2c13872346f0bb5&hd=3" },
+        { name: "Дайлид Теодор", details: "Данные не указаны", video: "https://vkvideo.ru/video_ext.php?oid=-221927186&id=456239129&hash=a629bed70d136b52&hd=3" }
+      ]
     },
-    "05.07": {
-      roles: {
-        "Старушка": [
-          { name: "Яковлева Наталия", details: "Рост: 162 см, одежда: 48, обувь: 40", video: "https://vkvideo.ru/video_ext.php?oid=-221927186&id=456239136&hash=4a2b20aacfaf3d19&hd=3" },
-          { name: "Алексеева Валентина", details: "71 год, рост: 164 см, одежда: 56, обувь: 39", video: "https://vkvideo.ru/video_ext.php?oid=-221927186&id=456239137&hash=c2ec7a3ed8e619fa&hd=3" }
-        ],
-        "Медбрат": []
-      }
+    {
+      date: "30.06",
+      role: "Мастер 1, Мастер 2",
+      candidates: [
+        { name: "Гененрайх Кирилл", details: "37 лет, рост: 180 см, одежда: 50, обувь: 44", video: "https://vkvideo.ru/video_ext.php?oid=-221927186&id=456239130&hash=1a7400700c1b8bf3&hd=3" },
+        { name: "Дмитрий Кюсснер", details: "Данные не указаны", video: "https://vkvideo.ru/video_ext.php?oid=-221927186&id=456239131&hash=e961998d91cbcc82&hd=3" },
+        { name: "Кряхтунов Сергей", details: "Рост: 185 см, одежда: 50, обувь: 43", video: "https://vkvideo.ru/video_ext.php?oid=-221927186&id=456239132&hash=8ecba5a73b23e089&hd=3" },
+        { name: "Балашов Артур", details: "27 лет, рост: 186 см, одежда (верх): XL, низ: 36, обувь: 43–44", video: "https://vkvideo.ru/video_ext.php?oid=-221927186&id=456239133&hash=5fbf8a57b12c70f4&hd=3" },
+        { name: "Сокольников Андрей", details: "39 лет, рост: 180 см, одежда: 48, обувь: 42", video: "https://vkvideo.ru/video_ext.php?oid=-221927186&id=456239134&hash=557ec890f2054ba0&hd=3" },
+        { name: "Балыбердин Александр", details: "34 года, рост: 176 см, одежда: 48, обувь: 42", video: "https://vkvideo.ru/video_ext.php?oid=-221927186&id=456239135&hash=a9da016ff441d449&hd=3" }
+      ]
     },
-    "06.07": {
-      roles: {
-        "Коллега 1, Коллега 2": []
-      }
+    {
+      date: "05.07",
+      role: "Старушка",
+      candidates: [
+        { name: "Яковлева Наталия", details: "Рост: 162 см, одежда: 48, обувь: 40", video: "https://vkvideo.ru/video_ext.php?oid=-221927186&id=456239136&hash=4a2b20aacfaf3d19&hd=3" },
+        { name: "Алексеева Валентина", details: "71 год, рост: 164 см, одежда: 56, обувь: 39", video: "https://vkvideo.ru/video_ext.php?oid=-221927186&id=456239137&hash=c2ec7a3ed8e619fa&hd=3" }
+      ]
     },
-    "12.07": {
-      roles: {
-        "Пациент": []
-      }
+    {
+      date: "05.07",
+      role: "Медбрат",
+      candidates: []
+    },
+    {
+      date: "06.07",
+      role: "Коллега 1, Коллега 2",
+      candidates: []
+    },
+    {
+      date: "12.07",
+      role: "Пациент",
+      candidates: []
     }
-  };
+  ];
 
   // --------------------------------------------------------------
-  // РЕНДЕР
+  // УТВЕРЖДЁННЫЕ (статический список, редактируется вручную)
+  // --------------------------------------------------------------
+  // Сюда можно добавлять имена вручную, например:
+  const approved = [
+    // { name: "Иванов Александр", role: "Охранник", date: "28.06" },
+    // { name: "Петрова Алиса", role: "Сказитель, Кощей, Царевна, Царевич", date: "28.06" }
+  ];
+
+  // --------------------------------------------------------------
+  // УТИЛИТЫ
   // --------------------------------------------------------------
   function getSurname(fullName) {
     const parts = fullName.trim().split(/\s+/);
     return parts[0] || fullName;
   }
 
-  function render() {
-    const container = document.getElementById('content');
+  function getPhotoPath(name) {
+    return `photos/${getSurname(name)}.jpg`;
+  }
+
+  // --------------------------------------------------------------
+  // РЕНДЕР УТВЕРЖДЁННЫХ
+  // --------------------------------------------------------------
+  function renderApproved() {
+    const container = document.getElementById('approvedList');
+    if (approved.length === 0) {
+      container.innerHTML = `<span class="empty-approved">Пока никого не утвердили</span>`;
+      return;
+    }
     let html = '';
+    approved.forEach(a => {
+      html += `<span class="approved-item">${a.name} (${a.role})</span>`;
+    });
+    container.innerHTML = html;
+  }
 
-    for (const [date, dateData] of Object.entries(data)) {
-      html += `<div class="date-section">`;
-      html += `<div class="date-title">📅 ${date}</div>`;
+  // --------------------------------------------------------------
+  // РЕНДЕР ГЛАВНОГО ЭКРАНА (роли)
+  // --------------------------------------------------------------
+  function renderMainScreen() {
+    const container = document.getElementById('rolesContainer');
+    // Группируем по дате
+    const groups = {};
+    rolesData.forEach(item => {
+      if (!groups[item.date]) groups[item.date] = [];
+      groups[item.date].push(item);
+    });
 
-      for (const [role, actors] of Object.entries(dateData.roles)) {
-        html += `<div class="role-block">`;
-        html += `<div class="role-title">${role}</div>`;
-
-        if (actors.length === 0) {
-          html += `<div class="empty-message">Нет кандидатов на эту роль</div>`;
-        } else {
-          html += `<div class="candidate-grid">`;
-          actors.forEach(actor => {
-            const surname = getSurname(actor.name);
-            const photoPath = `photos/${surname}.jpg`;
-            const safeName = actor.name.replace(/"/g, '&quot;');
-            const safeDetails = actor.details.replace(/"/g, '&quot;');
-            const safeVideo = actor.video.replace(/"/g, '&quot;');
-
-            html += `
-              <div class="candidate-card">
-                <div class="candidate-photo" onclick="openPhoto('${photoPath}')">
-                  <img src="${photoPath}" alt="${safeName}" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                  <div class="photo-placeholder" style="display:none;">Фото отсутствует</div>
-                </div>
-                <div class="candidate-name">${safeName}</div>
-                <div class="candidate-details">${safeDetails}</div>
-                <button class="video-btn" onclick="openVideo('${safeVideo}')">🎬 Видеопроба</button>
-              </div>
-            `;
-          });
-          html += `</div>`;
-        }
-
-        html += `</div>`;
-      }
-
+    let html = '';
+    for (const [date, items] of Object.entries(groups)) {
+      html += `<div class="date-group">`;
+      html += `<div class="date-label">📅 ${date}</div>`;
+      items.forEach(roleItem => {
+        const count = roleItem.candidates.length;
+        html += `
+          <button class="role-btn" data-role-id="${roleItem.role}" data-date="${roleItem.date}" onclick="openCandidates('${roleItem.role}', '${roleItem.date}')">
+            ${roleItem.role}
+            <span class="badge">${count} проб</span>
+          </button>
+        `;
+      });
       html += `</div>`;
     }
-
     container.innerHTML = html;
+  }
+
+  // --------------------------------------------------------------
+  // ОТКРЫТЬ КАНДИДАТОВ ПО РОЛИ
+  // --------------------------------------------------------------
+  let currentRole = null;
+
+  function openCandidates(role, date) {
+    currentRole = { role, date };
+    // Находим данные
+    const found = rolesData.find(r => r.role === role && r.date === date);
+    if (!found) return;
+
+    // Переключаем экраны
+    document.getElementById('mainScreen').classList.remove('active');
+    document.getElementById('candidatesScreen').classList.add('active');
+
+    document.getElementById('candidatesTitle').textContent = `${role} — ${date}`;
+
+    const list = document.getElementById('candidatesList');
+    if (found.candidates.length === 0) {
+      list.innerHTML = `<div class="empty-message">Нет кандидатов на эту роль</div>`;
+      return;
+    }
+
+    let html = '';
+    found.candidates.forEach(cand => {
+      const photoPath = getPhotoPath(cand.name);
+      html += `
+        <div class="candidate-card">
+          <div class="candidate-photo" onclick="openPhoto('${photoPath}')">
+            <img src="${photoPath}" alt="${cand.name}" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+            <div class="placeholder" style="display:none;">Фото</div>
+          </div>
+          <div class="candidate-info">
+            <div class="candidate-name">${cand.name}</div>
+            <div class="candidate-details">${cand.details}</div>
+            <button class="video-btn" onclick="openVideo('${cand.video}')">▶ Смотреть видео</button>
+          </div>
+        </div>
+      `;
+    });
+    list.innerHTML = html;
+  }
+
+  // --------------------------------------------------------------
+  // НАЗАД
+  // --------------------------------------------------------------
+  function goBack() {
+    document.getElementById('candidatesScreen').classList.remove('active');
+    document.getElementById('mainScreen').classList.add('active');
+    currentRole = null;
   }
 
   // --------------------------------------------------------------
   // МОДАЛКИ
   // --------------------------------------------------------------
-  function openPhoto(src) {
-    const modal = document.getElementById('photoModal');
-    const img = document.getElementById('modalImg');
-    img.src = src;
-    modal.style.display = 'flex';
-  }
-
   function openVideo(url) {
     const modal = document.getElementById('videoModal');
     const iframe = document.getElementById('videoIframe');
@@ -434,28 +579,37 @@
     modal.style.display = 'flex';
   }
 
-  function closeModal(modalId) {
-    const modal = document.getElementById(modalId);
-    if (!modal) return;
+  function closeVideoModal() {
+    const modal = document.getElementById('videoModal');
     modal.style.display = 'none';
-    if (modalId === 'videoModal') {
-      document.getElementById('videoIframe').src = '';
-    }
-    if (modalId === 'photoModal') {
-      document.getElementById('modalImg').src = '';
-    }
+    document.getElementById('videoIframe').src = '';
   }
 
+  function openPhoto(src) {
+    const modal = document.getElementById('photoModal');
+    const img = document.getElementById('modalPhoto');
+    img.src = src;
+    modal.style.display = 'flex';
+  }
+
+  function closePhotoModal() {
+    document.getElementById('photoModal').style.display = 'none';
+    document.getElementById('modalPhoto').src = '';
+  }
+
+  // Закрытие по Escape
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') {
-      const photoModal = document.getElementById('photoModal');
-      const videoModal = document.getElementById('videoModal');
-      if (photoModal.style.display === 'flex') closeModal('photoModal');
-      if (videoModal.style.display === 'flex') closeModal('videoModal');
+      if (document.getElementById('videoModal').style.display === 'flex') closeVideoModal();
+      if (document.getElementById('photoModal').style.display === 'flex') closePhotoModal();
     }
   });
 
-  render();
+  // --------------------------------------------------------------
+  // СТАРТ
+  // --------------------------------------------------------------
+  renderApproved();
+  renderMainScreen();
 </script>
 
 </body>
