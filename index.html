@@ -38,7 +38,6 @@
       margin-top: 2px;
     }
 
-    /* ---- Блок утверждённых (вверху) ---- */
     #approvedSection {
       background: #141416;
       border-radius: 16px;
@@ -77,12 +76,19 @@
       font-size: 14px;
     }
 
-    /* ---- Главный экран (список ролей) ---- */
-    #mainScreen .date-group {
+    .screen {
+      display: none;
+    }
+
+    .screen.active {
+      display: block;
+    }
+
+    .date-group {
       margin-bottom: 28px;
     }
 
-    #mainScreen .date-label {
+    .date-label {
       font-size: 18px;
       font-weight: 600;
       color: #ccc;
@@ -120,15 +126,6 @@
       border-radius: 20px;
       font-size: 13px;
       color: #aaa;
-    }
-
-    /* ---- Экран кандидатов ---- */
-    .screen {
-      display: none;
-    }
-
-    .screen.active {
-      display: block;
     }
 
     .back-btn {
@@ -237,7 +234,6 @@
       border-radius: 16px;
     }
 
-    /* ---- Модалка видео ---- */
     .modal {
       display: none;
       position: fixed;
@@ -296,7 +292,6 @@
       background: #ff3b30;
     }
 
-    /* ---- Модалка фото ---- */
     .modal-img {
       display: block;
       max-width: 90vw;
@@ -305,7 +300,6 @@
       border-radius: 16px;
     }
 
-    /* ---- Адаптив ---- */
     @media (max-width: 480px) {
       .candidate-card {
         padding: 12px;
@@ -347,18 +341,18 @@
     <div class="sub">Проект «Счастье этажом выше»</div>
   </div>
 
-  <!-- БЛОК УТВЕРЖДЁННЫХ (всегда виден сверху) -->
+  <!-- Блок утверждённых (сверху) -->
   <div id="approvedSection">
     <h2>✅ Утверждённые</h2>
     <div id="approvedList" class="approved-list"></div>
   </div>
 
-  <!-- ГЛАВНЫЙ ЭКРАН: список ролей -->
+  <!-- Главный экран: список ролей -->
   <div id="mainScreen" class="screen active">
     <div id="rolesContainer"></div>
   </div>
 
-  <!-- ЭКРАН КАНДИДАТОВ (по роли) -->
+  <!-- Экран кандидатов -->
   <div id="candidatesScreen" class="screen">
     <button class="back-btn" onclick="goBack()">← Назад</button>
     <h2 id="candidatesTitle" style="font-size:20px; margin-bottom:16px;"></h2>
@@ -383,17 +377,17 @@
 </div>
 
 <script>
-  // --------------------------------------------------------------
+  // ================================================================
   // ДАННЫЕ
-  // --------------------------------------------------------------
+  // ================================================================
   const rolesData = [
     {
       date: "28.06",
       role: "Охранник",
       candidates: [
         { name: "Александр Иванов", details: "Рост: 176 см, одежда: 52, обувь: 42", video: "https://vkvideo.ru/video_ext.php?oid=-221927186&id=456239119&hash=4fd94497c69c3606&hd=3" },
-        { name: "Ефремов Виктор", details: "Рост: 175 см, одежда: 48, обувь: 42", video: "https://vkvideo.ru/video_ext.php?oid=-221927186&id=456239118&hash=c37c7a54e13ef74a&hd=3" },
-        { name: "Драница Виталий", details: "47 лет, рост: 175 см, одежда: 52, обувь: 40", video: "https://vkvideo.ru/video_ext.php?oid=-221927186&id=456239117&hash=48f988ee1f388d10&hd=4" },
+        { name: "Ефремов Виктор Ильич", details: "Рост: 175 см, одежда: 48, обувь: 42", video: "https://vkvideo.ru/video_ext.php?oid=-221927186&id=456239118&hash=c37c7a54e13ef74a&hd=3" },
+        { name: "Драница Виталий Анатольевич", details: "47 лет, рост: 175 см, одежда: 52, обувь: 40", video: "https://vkvideo.ru/video_ext.php?oid=-221927186&id=456239117&hash=48f988ee1f388d10&hd=4" },
         { name: "Пономарев Алексей Юрьевич", details: "37 лет, рост: 178 см, одежда: 52, обувь: 43", video: "https://vkvideo.ru/video_ext.php?oid=-221927186&id=456239120&hash=a594cead6cc31a66&hd=3" },
         { name: "Никулин Игорь", details: "Рост: 182 см, одежда: 50, обувь: 43", video: "https://vk.com/video_ext.php?oid=563995003&id=456239045&hash=a47d7fedd55b04e0&autoplay=1" }
       ]
@@ -417,9 +411,9 @@
       date: "30.06",
       role: "Мастер 1, Мастер 2",
       candidates: [
-        { name: "Гененрайх Кирилл", details: "37 лет, рост: 180 см, одежда: 50, обувь: 44", video: "https://vkvideo.ru/video_ext.php?oid=-221927186&id=456239130&hash=1a7400700c1b8bf3&hd=3" },
+        { name: "Гененрайх Кирилл Алексеевич", details: "37 лет, рост: 180 см, одежда: 50, обувь: 44", video: "https://vkvideo.ru/video_ext.php?oid=-221927186&id=456239130&hash=1a7400700c1b8bf3&hd=3" },
         { name: "Дмитрий Кюсснер", details: "Данные не указаны", video: "https://vkvideo.ru/video_ext.php?oid=-221927186&id=456239131&hash=e961998d91cbcc82&hd=3" },
-        { name: "Кряхтунов Сергей", details: "Рост: 185 см, одежда: 50, обувь: 43", video: "https://vkvideo.ru/video_ext.php?oid=-221927186&id=456239132&hash=8ecba5a73b23e089&hd=3" },
+        { name: "Кряхтунов Сергей Игоревич", details: "Рост: 185 см, одежда: 50, обувь: 43", video: "https://vkvideo.ru/video_ext.php?oid=-221927186&id=456239132&hash=8ecba5a73b23e089&hd=3" },
         { name: "Балашов Артур", details: "27 лет, рост: 186 см, одежда (верх): XL, низ: 36, обувь: 43–44", video: "https://vkvideo.ru/video_ext.php?oid=-221927186&id=456239133&hash=5fbf8a57b12c70f4&hd=3" },
         { name: "Сокольников Андрей", details: "39 лет, рост: 180 см, одежда: 48, обувь: 42", video: "https://vkvideo.ru/video_ext.php?oid=-221927186&id=456239134&hash=557ec890f2054ba0&hd=3" },
         { name: "Балыбердин Александр", details: "34 года, рост: 176 см, одежда: 48, обувь: 42", video: "https://vkvideo.ru/video_ext.php?oid=-221927186&id=456239135&hash=a9da016ff441d449&hd=3" }
@@ -450,19 +444,28 @@
     }
   ];
 
-  // --------------------------------------------------------------
-  // УТВЕРЖДЁННЫЕ (статический список, редактируется вручную)
-  // --------------------------------------------------------------
-  // Сюда можно добавлять имена вручную, например:
+  // ================================================================
+  // СПИСОК УТВЕРЖДЁННЫХ (заполняется вручную)
+  // ================================================================
   const approved = [
-    // { name: "Иванов Александр", role: "Охранник", date: "28.06" },
-    // { name: "Петрова Алиса", role: "Сказитель, Кощей, Царевна, Царевич", date: "28.06" }
+    // Пример: { name: "Иванов Александр", role: "Охранник", date: "28.06" }
   ];
 
-  // --------------------------------------------------------------
-  // УТИЛИТЫ
-  // --------------------------------------------------------------
+  // ================================================================
+  // ИСКЛЮЧЕНИЯ ДЛЯ ПОИСКА ФАМИЛИИ (когда первое слово — не фамилия)
+  // ================================================================
+  const surnameExceptions = {
+    "Александр Иванов": "Иванов",
+    "Алиса Петрова": "Петрова",
+    "Дмитрий Кюсснер": "Кюсснер",
+    "Дайлид Теодор": "Дайлид"   // если нужно "Дайдид" — замените здесь
+  };
+
+  // ================================================================
+  // ВСПОМОГАТЕЛЬНЫЕ ФУНКЦИИ
+  // ================================================================
   function getSurname(fullName) {
+    if (surnameExceptions[fullName]) return surnameExceptions[fullName];
     const parts = fullName.trim().split(/\s+/);
     return parts[0] || fullName;
   }
@@ -471,9 +474,9 @@
     return `photos/${getSurname(name)}.jpg`;
   }
 
-  // --------------------------------------------------------------
+  // ================================================================
   // РЕНДЕР УТВЕРЖДЁННЫХ
-  // --------------------------------------------------------------
+  // ================================================================
   function renderApproved() {
     const container = document.getElementById('approvedList');
     if (approved.length === 0) {
@@ -487,12 +490,11 @@
     container.innerHTML = html;
   }
 
-  // --------------------------------------------------------------
-  // РЕНДЕР ГЛАВНОГО ЭКРАНА (роли)
-  // --------------------------------------------------------------
+  // ================================================================
+  // РЕНДЕР ГЛАВНОГО ЭКРАНА
+  // ================================================================
   function renderMainScreen() {
     const container = document.getElementById('rolesContainer');
-    // Группируем по дате
     const groups = {};
     rolesData.forEach(item => {
       if (!groups[item.date]) groups[item.date] = [];
@@ -506,7 +508,7 @@
       items.forEach(roleItem => {
         const count = roleItem.candidates.length;
         html += `
-          <button class="role-btn" data-role-id="${roleItem.role}" data-date="${roleItem.date}" onclick="openCandidates('${roleItem.role}', '${roleItem.date}')">
+          <button class="role-btn" onclick="openCandidates('${roleItem.role}', '${roleItem.date}')">
             ${roleItem.role}
             <span class="badge">${count} проб</span>
           </button>
@@ -517,21 +519,18 @@
     container.innerHTML = html;
   }
 
-  // --------------------------------------------------------------
-  // ОТКРЫТЬ КАНДИДАТОВ ПО РОЛИ
-  // --------------------------------------------------------------
+  // ================================================================
+  // ОТКРЫТЬ КАНДИДАТОВ
+  // ================================================================
   let currentRole = null;
 
   function openCandidates(role, date) {
     currentRole = { role, date };
-    // Находим данные
     const found = rolesData.find(r => r.role === role && r.date === date);
     if (!found) return;
 
-    // Переключаем экраны
     document.getElementById('mainScreen').classList.remove('active');
     document.getElementById('candidatesScreen').classList.add('active');
-
     document.getElementById('candidatesTitle').textContent = `${role} — ${date}`;
 
     const list = document.getElementById('candidatesList');
@@ -560,18 +559,18 @@
     list.innerHTML = html;
   }
 
-  // --------------------------------------------------------------
+  // ================================================================
   // НАЗАД
-  // --------------------------------------------------------------
+  // ================================================================
   function goBack() {
     document.getElementById('candidatesScreen').classList.remove('active');
     document.getElementById('mainScreen').classList.add('active');
     currentRole = null;
   }
 
-  // --------------------------------------------------------------
+  // ================================================================
   // МОДАЛКИ
-  // --------------------------------------------------------------
+  // ================================================================
   function openVideo(url) {
     const modal = document.getElementById('videoModal');
     const iframe = document.getElementById('videoIframe');
@@ -580,8 +579,7 @@
   }
 
   function closeVideoModal() {
-    const modal = document.getElementById('videoModal');
-    modal.style.display = 'none';
+    document.getElementById('videoModal').style.display = 'none';
     document.getElementById('videoIframe').src = '';
   }
 
@@ -597,7 +595,6 @@
     document.getElementById('modalPhoto').src = '';
   }
 
-  // Закрытие по Escape
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') {
       if (document.getElementById('videoModal').style.display === 'flex') closeVideoModal();
@@ -605,9 +602,9 @@
     }
   });
 
-  // --------------------------------------------------------------
-  // СТАРТ
-  // --------------------------------------------------------------
+  // ================================================================
+  // ЗАПУСК
+  // ================================================================
   renderApproved();
   renderMainScreen();
 </script>
