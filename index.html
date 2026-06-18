@@ -1,314 +1,599 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>Лесное озеро — Кастинг</title>
-<style>
-*{margin:0;padding:0;box-sizing:border-box;transition:background-color .25s,color .2s,border-color .2s}
-:root,body.light{--bg-body:#f8fafc;--bg-header:#fff;--card-bg:#fff;--approved-card-bg:#ecfdf5;--text-primary:#0f172a;--text-secondary:#334155;--text-muted:#64748b;--border-light:#e2e8f0;--shadow-sm:0 4px 12px rgba(0,0,0,.04);--shadow-md:0 10px 25px -5px rgba(0,0,0,.05);--accent:#3b82f6;--accent-hover:#2563eb;--approved:#10b981;--approved-bg:#d1fae5;--approved-border:#a7f3d0;--chip-bg:#f1f5f9;--modal-bg:rgba(0,0,0,.5);--date-badge:#e0e7ff;--date-text:#4338ca;--scene-bg:#faf9f5;--scene-border:#e2e0d4;--scene-text:#1a1a1a;--scene-dialogue-bg:#f5f3ee}
-body.dark{--bg-body:#0a0c10;--bg-header:#11151c;--card-bg:#161c27;--approved-card-bg:#1a2e28;--text-primary:#f1f5f9;--text-secondary:#cbd5e1;--text-muted:#94a3b8;--border-light:#2d3a4e;--shadow-sm:0 4px 12px rgba(0,0,0,.5);--shadow-md:0 10px 25px -5px rgba(0,0,0,.6);--accent:#60a5fa;--accent-hover:#93c5fd;--approved:#34d399;--approved-bg:#1f3a2f;--approved-border:#2d5a4a;--chip-bg:#1e2a3a;--modal-bg:rgba(0,0,0,.7);--date-badge:#1e2a3a;--date-text:#a5b4fc;--scene-bg:#1a1c20;--scene-border:#2a2c30;--scene-text:#e2e2e2;--scene-dialogue-bg:#25282e}
-body{background-color:var(--bg-body);color:var(--text-primary);font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;line-height:1.5}
-.header{background-color:var(--bg-header);border-bottom:1px solid var(--border-light);padding:1.25rem 1.5rem;position:sticky;top:0;z-index:10;box-shadow:var(--shadow-sm)}
-.header-container{max-width:1400px;margin:0 auto;display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:1rem}
-.title-section h1{font-size:1.8rem;font-weight:700;background:linear-gradient(135deg,var(--accent),#a78bfa);background-clip:text;-webkit-background-clip:text;color:transparent}
-.theme-toggle{background-color:var(--chip-bg);border:1px solid var(--border-light);border-radius:60px;padding:.5rem 1.2rem;font-size:.9rem;font-weight:500;cursor:pointer;display:inline-flex;align-items:center;gap:.5rem;color:var(--text-primary)}
-.theme-toggle:hover{background-color:var(--accent);color:#fff}
-.main-content{max-width:1400px;margin:2rem auto;padding:0 1.5rem}
-.approved-section{background:var(--approved-card-bg);border:1px solid var(--approved-border);border-radius:1.5rem;padding:1.5rem;margin-bottom:2.5rem}
-.approved-header{display:flex;align-items:center;justify-content:space-between;cursor:pointer}
-.approved-title{font-size:1.2rem;font-weight:600;display:flex;align-items:center;gap:.5rem;color:var(--approved)}
-.approved-toggle-icon{font-size:1.2rem;color:var(--text-muted);transition:transform .2s}
-.approved-list{max-height:0;overflow:hidden;transition:max-height .4s ease;margin-top:0}
-.approved-list.expanded{max-height:800px;margin-top:1rem}
-.approved-item{display:flex;gap:1.2rem;background:var(--card-bg);border-radius:1rem;padding:1rem;margin-bottom:.8rem;border:1px solid var(--border-light);transition:all .2s}
-.approved-item:hover{transform:translateX(4px);border-color:var(--approved)}
-.approved-photo{flex-shrink:0}
-.approved-photo img{width:100px;height:100px;object-fit:cover;border-radius:.75rem;cursor:pointer;border:2px solid var(--approved)}
-.approved-photo-placeholder{width:100px;height:100px;background:var(--approved);border-radius:.75rem;display:flex;align-items:center;justify-content:center;color:#fff;font-size:2rem;font-weight:700}
-.approved-info{flex:1}
-.approved-role{display:inline-block;background:var(--approved-bg);color:var(--approved);font-size:.7rem;font-weight:700;padding:.2rem .6rem;border-radius:30px;margin-bottom:.5rem}
-.approved-actor-name{font-size:1.1rem;font-weight:700;margin-bottom:.2rem}
-.approved-details{font-size:.85rem;color:var(--text-secondary);margin-bottom:.5rem}
-.approved-contact-btn{background:var(--accent);color:#fff;border:none;padding:.3rem .8rem;border-radius:40px;font-size:.75rem;cursor:pointer;display:inline-flex;align-items:center;gap:.4rem;text-decoration:none}
-.approved-contact-btn:hover{background:var(--accent-hover)}
-.approved-tg-btn{background:var(--chip-bg);color:var(--accent);border:1px solid var(--border-light);padding:.3rem .8rem;border-radius:40px;font-size:.75rem;text-decoration:none;display:inline-flex;align-items:center;gap:.4rem;margin-top:.3rem}
-.approved-tg-btn:hover{background:var(--accent);color:#fff}
-.empty-approved{color:var(--text-muted);font-size:.9rem;padding:.5rem 0}
-.series-section-title{font-size:1.3rem;font-weight:600;margin-bottom:1.25rem;color:var(--text-secondary)}
-.series-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:1.8rem}
-.series-card{background:var(--card-bg);border-radius:1.5rem;border:1px solid var(--border-light);box-shadow:var(--shadow-sm);overflow:hidden}
-.card-header{padding:1rem 1.5rem .5rem;border-bottom:1px solid var(--border-light)}
-.series-number{font-size:1.4rem;font-weight:700;display:flex;align-items:center;gap:.5rem}
-.badge-count{font-size:.75rem;background:var(--chip-bg);padding:.2rem .7rem;border-radius:40px}
-.characters-list{padding:1rem 1.5rem 1.5rem}
-.character-items{display:flex;flex-direction:column;gap:.6rem;list-style:none}
-.character-item{display:flex;align-items:center;justify-content:space-between;background:var(--chip-bg);padding:.6rem 1rem;border-radius:.75rem;font-size:.9rem;font-weight:500;cursor:pointer;border:1px solid transparent;transition:all .2s}
-.character-item:hover{border-color:var(--accent);background:var(--card-bg);transform:translateX(4px)}
-.character-name{font-weight:600}
-.character-dates{display:flex;flex-wrap:wrap;gap:.3rem}
-.date-badge{font-size:.7rem;background:var(--date-badge);color:var(--date-text);padding:.2rem .5rem;border-radius:20px;font-weight:400}
-.empty-message{color:var(--text-muted);padding:.5rem;text-align:center;background:var(--chip-bg);border-radius:1rem}
-.modal{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background-color:var(--modal-bg);align-items:center;justify-content:center;z-index:1000;backdrop-filter:blur(4px)}
-.modal.active{display:flex}
-.modal-container{background:var(--card-bg);border-radius:2rem;max-width:800px;width:90%;max-height:85vh;overflow-y:auto;padding:1.5rem;border:1px solid var(--border-light);box-shadow:var(--shadow-md);position:relative}
-.modal-close{position:absolute;top:1rem;right:1.2rem;font-size:1.8rem;cursor:pointer;color:var(--text-muted);z-index:10}
-.modal-close:hover{color:var(--accent)}
-.modal-title{font-size:1.6rem;font-weight:700;margin-bottom:.25rem;color:var(--accent)}
-.modal-subtitle{color:var(--text-muted);font-size:.85rem;margin-bottom:1.5rem;padding-bottom:.75rem;border-bottom:1px solid var(--border-light)}
-.scene-block{background:var(--scene-bg);border:1px solid var(--scene-border);border-radius:1rem;margin-bottom:1.5rem;overflow:hidden}
-.scene-header{display:flex;align-items:center;justify-content:space-between;padding:.8rem 1rem;cursor:pointer;background:var(--scene-bg);transition:background .2s}
-.scene-header:hover{background:var(--chip-bg)}
-.scene-title{font-weight:600;font-size:.8rem;color:var(--accent);letter-spacing:.5px;text-transform:uppercase;display:flex;align-items:center;gap:.5rem}
-.scene-flag{font-size:1rem}
-.toggle-scene-btn{background:0 0;border:none;font-size:.8rem;cursor:pointer;color:var(--text-muted);padding:.2rem .5rem;font-family:monospace;border-radius:20px}
-.toggle-scene-btn:hover{background:var(--accent);color:#fff}
-.scene-content{font-family:'Courier New','Fira Code','Source Code Pro',monospace;font-size:.85rem;line-height:1.6;color:var(--scene-text);padding:0 1rem 1rem 1rem;border-top:1px solid var(--scene-border);display:none}
-.scene-content.expanded{display:block}
-.scene-action{margin:.8rem 0;font-style:normal;color:var(--text-secondary)}
-.scene-parenthetical{margin:.2rem 0 .2rem 1.5rem;font-style:italic;color:var(--text-muted);font-size:.75rem}
-.scene-dialogue{margin:.4rem 0;padding-left:2rem;background:var(--scene-dialogue-bg);border-radius:.5rem;padding:.3rem 1rem}
-.scene-character{font-weight:700;text-transform:uppercase;letter-spacing:1px;font-size:.8rem;margin-bottom:.2rem;color:var(--accent)}
-.scene-lines{margin-left:1rem;font-size:.85rem}
-.go-to-probes-btn{background:var(--accent);color:#fff;border:none;padding:.4rem 1rem;border-radius:40px;font-weight:500;cursor:pointer;font-size:.75rem;margin-top:.75rem;font-family:system-ui}
-.probes-section{margin-top:.5rem}
-.probes-title{font-weight:600;margin-bottom:.75rem;font-size:1rem}
-.probes-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:1.2rem}
-.probe-card{background:var(--chip-bg);border-radius:1rem;padding:1rem;text-align:center;border:1px solid var(--border-light);transition:all .2s}
-.probe-card:hover{transform:translateY(-2px);box-shadow:var(--shadow-sm);border-color:var(--accent)}
-.probe-card.approved-card{border:2px solid var(--approved);background:var(--approved-bg)}
-.approved-tag{background:var(--approved);color:#064e3b;padding:.2rem .6rem;border-radius:30px;font-size:.65rem;font-weight:700;display:inline-block;margin-left:.5rem}
-body.dark .approved-tag{color:#6ee7b7}
-.probe-photo{margin-bottom:.75rem}
-.probe-photo img{width:100%;aspect-ratio:1/1;object-fit:cover;border-radius:.75rem;cursor:pointer;border:2px solid var(--accent);background:var(--card-bg)}
-.probe-name{font-weight:700;font-size:1rem;margin-bottom:.3rem}
-.probe-details{font-size:.75rem;color:var(--text-secondary);margin-bottom:.3rem}
-.probe-desc{font-size:.7rem;color:var(--text-muted);margin-bottom:.75rem}
-.probe-film-link{display:inline-block;background:var(--chip-bg);color:var(--accent);border:1px solid var(--border-light);padding:.3rem .6rem;border-radius:40px;font-size:.7rem;text-decoration:none;margin-bottom:.5rem}
-.probe-film-link:hover{background:var(--accent);color:#fff}
-.watch-video-btn{background:var(--accent);color:#fff;border:none;padding:.4rem .8rem;border-radius:40px;font-weight:500;cursor:pointer;font-size:.75rem;width:100%}
-.watch-video-btn:hover{background:var(--accent-hover)}
-.empty-probes{color:var(--text-muted);padding:1rem;text-align:center;background:var(--chip-bg);border-radius:1rem}
-.video-modal{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.92);align-items:center;justify-content:center;z-index:1200}
-.video-modal.active{display:flex}
-.video-container{position:relative;width:90%;max-width:1000px;background:#000;border-radius:.75rem;overflow:hidden}
-.video-responsive{position:relative;padding-bottom:56.25%;height:0}
-.video-responsive iframe{position:absolute;top:0;left:0;width:100%;height:100%;border:0}
-.video-close-btn{position:absolute;top:12px;right:12px;background:rgba(0,0,0,.75);backdrop-filter:blur(8px);color:#fff;border:none;font-size:1rem;padding:.5rem 1rem;border-radius:40px;cursor:pointer;z-index:20}
-.image-modal{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.9);align-items:center;justify-content:center;z-index:1300;cursor:pointer}
-.image-modal.active{display:flex}
-.image-modal img{max-width:90%;max-height:90%;border-radius:1rem}
-.close-image{position:absolute;top:20px;right:30px;color:#fff;font-size:2rem;cursor:pointer;background:0 0;border:none}
-.footer{text-align:center;padding:2rem;margin-top:2rem;border-top:1px solid var(--border-light);color:var(--text-muted);font-size:.85rem}
-@media(min-width:641px){.approved-item{flex-direction:row;align-items:flex-start}.approved-photo img{width:100px;height:100px}}
-@media(max-width:640px){.series-grid{gap:1rem}.probes-grid{grid-template-columns:1fr;gap:1rem}.modal-title{font-size:1.3rem}.approved-item{flex-direction:row!important;align-items:center!important;text-align:left!important;gap:.8rem;padding:.8rem}.approved-info{text-align:left!important}.approved-photo img{width:65px;height:65px}.approved-photo-placeholder{width:65px;height:65px;font-size:1.5rem}.approved-actor-name{font-size:.95rem;margin-bottom:.1rem}.approved-details{font-size:.7rem;margin-bottom:.3rem}.approved-contact-btn{font-size:.65rem;padding:.2rem .6rem}.approved-role{font-size:.6rem;margin-bottom:.3rem}.approved-list.expanded{max-height:600px}.character-item{flex-direction:column;align-items:flex-start;gap:.5rem}.probe-card{flex-wrap:wrap}}
-</style>
-</head>
-<body class="light">
-<header class="header"><div class="header-container"><div class="title-section"><h1>🌲 Лесное озеро</h1></div><button class="theme-toggle" id="themeSwitcher"><span id="themeIcon">🌞</span> <span id="themeText">Светлая тема</span></button></div></header>
-<main class="main-content">
-<div class="approved-section" id="approvedSection"><div class="approved-header" id="approvedHeader"><div class="approved-title">✅ Утверждённые</div><span class="approved-toggle-icon" id="approvedToggleIcon">▼</span></div><div class="approved-list" id="approvedList"><div id="approvedListContainer"></div></div></div>
-<div id="extrasContainer"></div>
-<div class="series-section-title">📺 По сериям</div>
-<div id="seriesContainer"></div>
-</main>
-<footer class="footer"><p>🎬 Нажми на персонажа → раскрой сцену (📖) → пробы</p></footer>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Утверждение второго плана</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-<div id="probeModal" class="modal"><div class="modal-container"><span class="modal-close" id="closeProbeModal">×</span><div id="modalDynamicContent"></div></div></div>
-<div id="imageModal" class="image-modal"><button class="close-image" id="closeImageBtn">✕</button><img id="fullscreenImage" src="" alt="Увеличенное фото"></div>
-<div id="videoModal" class="video-modal"><div class="video-container"><button class="video-close-btn" id="closeVideoBtn">✕ Закрыть</button><div class="video-responsive" id="videoIframeContainer"></div></div></div>
+    body {
+      background: #f5f3f0;
+      font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+      color: #1e1e1e;
+      padding: 16px;
+      min-height: 100vh;
+    }
+
+    .app-header {
+      margin-bottom: 16px;
+    }
+
+    .app-header h1 {
+      font-size: 24px;
+      font-weight: 700;
+      color: #1e1e1e;
+    }
+
+    .app-header .sub {
+      font-size: 14px;
+      color: #5a5a5a;
+      margin-top: 2px;
+    }
+
+    /* ---- Блок утверждённых (сверху) ---- */
+    #approvedSection {
+      background: #ffffff;
+      border-radius: 16px;
+      padding: 16px;
+      margin-bottom: 24px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+      border: 1px solid #e8e0d8;
+    }
+
+    #approvedSection h2 {
+      font-size: 18px;
+      font-weight: 600;
+      color: #2c3e50;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .approved-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px 12px;
+    }
+
+    .approved-item {
+      background: #eef3f7;
+      padding: 6px 14px;
+      border-radius: 30px;
+      font-size: 14px;
+      color: #1e3c5c;
+    }
+
+    .empty-approved {
+      color: #8e8e8e;
+      font-style: italic;
+      font-size: 14px;
+    }
+
+    /* ---- Экраны ---- */
+    .screen {
+      display: none;
+    }
+
+    .screen.active {
+      display: block;
+    }
+
+    /* ---- Главный экран: роли ---- */
+    .date-group {
+      margin-bottom: 28px;
+    }
+
+    .date-label {
+      font-size: 18px;
+      font-weight: 600;
+      color: #2c3e50;
+      margin-bottom: 12px;
+      padding-left: 4px;
+      border-left: 3px solid #b8860b;
+      padding-left: 12px;
+    }
+
+    .role-btn {
+      display: block;
+      width: 100%;
+      background: #ffffff;
+      border: 1px solid #e0d8d0;
+      border-radius: 16px;
+      padding: 14px 18px;
+      margin-bottom: 10px;
+      color: #1e1e1e;
+      font-size: 17px;
+      font-weight: 500;
+      text-align: left;
+      cursor: pointer;
+      transition: 0.15s;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+    }
+
+    .role-btn:active {
+      transform: scale(0.97);
+      background: #f5f0ea;
+    }
+
+    .role-btn .badge {
+      float: right;
+      background: #eef3f7;
+      padding: 2px 12px;
+      border-radius: 20px;
+      font-size: 13px;
+      color: #5a5a5a;
+    }
+
+    /* ---- Экран кандидатов ---- */
+    .back-btn {
+      background: none;
+      border: none;
+      color: #b8860b;
+      font-size: 18px;
+      font-weight: 500;
+      padding: 8px 0 16px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .candidate-list {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .candidate-card {
+      background: #ffffff;
+      border-radius: 20px;
+      padding: 14px;
+      border: 1px solid #e0d8d0;
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+    }
+
+    .candidate-photo {
+      width: 80px;
+      height: 106px;
+      flex-shrink: 0;
+      border-radius: 14px;
+      overflow: hidden;
+      background: #eae7e3;
+      cursor: pointer;
+      position: relative;
+    }
+
+    .candidate-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .candidate-photo .placeholder {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #8e8e8e;
+      font-size: 12px;
+      background: #f0edea;
+      text-align: center;
+      padding: 6px;
+    }
+
+    .candidate-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .candidate-name {
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 4px;
+      color: #1e1e1e;
+    }
+
+    .candidate-details {
+      font-size: 13px;
+      color: #5a5a5a;
+      line-height: 1.4;
+      margin-bottom: 8px;
+    }
+
+    .video-btn {
+      background: #2c6b9e;
+      color: #fff;
+      border: none;
+      border-radius: 30px;
+      padding: 8px 18px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: 0.15s;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .video-btn:active {
+      transform: scale(0.95);
+      background: #1f4a6e;
+    }
+
+    .empty-message {
+      color: #8e8e8e;
+      font-style: italic;
+      padding: 24px 0;
+      text-align: center;
+      background: rgba(0,0,0,0.02);
+      border-radius: 16px;
+    }
+
+    /* ---- Модалки ---- */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.85);
+      z-index: 1000;
+      justify-content: center;
+      align-items: center;
+      backdrop-filter: blur(8px);
+      padding: 20px;
+      cursor: pointer;
+    }
+
+    .modal-content {
+      background: #ffffff;
+      border-radius: 20px;
+      max-width: 95vw;
+      max-height: 95vh;
+      position: relative;
+      cursor: default;
+      overflow: hidden;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.3);
+    }
+
+    .modal-video {
+      width: 90vw;
+      max-width: 800px;
+      height: 50vw;
+      max-height: 75vh;
+      border: none;
+      border-radius: 12px;
+      background: #000;
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 8px;
+      right: 12px;
+      font-size: 28px;
+      color: #1e1e1e;
+      cursor: pointer;
+      background: rgba(255,255,255,0.7);
+      width: 36px;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 40px;
+      transition: 0.15s;
+      z-index: 10;
+    }
+
+    .modal-close:hover {
+      background: #ff3b30;
+      color: #fff;
+    }
+
+    .modal-img {
+      display: block;
+      max-width: 90vw;
+      max-height: 85vh;
+      object-fit: contain;
+      border-radius: 16px;
+    }
+
+    /* ---- Адаптив ---- */
+    @media (max-width: 480px) {
+      .candidate-card {
+        padding: 12px;
+        gap: 12px;
+      }
+      .candidate-photo {
+        width: 70px;
+        height: 93px;
+      }
+      .candidate-name {
+        font-size: 15px;
+      }
+      .candidate-details {
+        font-size: 12px;
+      }
+      .video-btn {
+        font-size: 13px;
+        padding: 6px 14px;
+      }
+      .approved-item {
+        font-size: 13px;
+        padding: 4px 12px;
+      }
+    }
+
+    @media (max-width: 380px) {
+      .candidate-photo {
+        width: 60px;
+        height: 80px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div id="app">
+  <div class="app-header">
+    <h1>🎭 Утверждение второго плана</h1>
+    <div class="sub">Проект «Счастье этажом выше»</div>
+  </div>
+
+  <!-- Блок утверждённых (сверху) -->
+  <div id="approvedSection">
+    <h2>✅ Утверждённые</h2>
+    <div id="approvedList" class="approved-list"></div>
+  </div>
+
+  <!-- Главный экран: список ролей -->
+  <div id="mainScreen" class="screen active">
+    <div id="rolesContainer"></div>
+  </div>
+
+  <!-- Экран кандидатов -->
+  <div id="candidatesScreen" class="screen">
+    <button class="back-btn" onclick="goBack()">← Назад</button>
+    <h2 id="candidatesTitle" style="font-size:20px; margin-bottom:16px;"></h2>
+    <div id="candidatesList" class="candidate-list"></div>
+  </div>
+</div>
+
+<!-- Модалка видео -->
+<div id="videoModal" class="modal" onclick="closeVideoModal()">
+  <div class="modal-content" onclick="event.stopPropagation()">
+    <span class="modal-close" onclick="closeVideoModal()">×</span>
+    <iframe id="videoIframe" class="modal-video" src="" allowfullscreen allow="autoplay; encrypted-media; fullscreen; picture-in-picture; screen-wake-lock;"></iframe>
+  </div>
+</div>
+
+<!-- Модалка фото -->
+<div id="photoModal" class="modal" onclick="closePhotoModal()">
+  <div class="modal-content" onclick="event.stopPropagation()">
+    <span class="modal-close" onclick="closePhotoModal()">×</span>
+    <img id="modalPhoto" class="modal-img" src="" alt="фото">
+  </div>
+</div>
 
 <script>
-const APPROVED_ACTORS = [
-{id:"matvey",role:"ПАРА",name:"Матвей",age:"17 лет",photo:"photos/матвей.jpg",details:"Рост 187, размер одежды 46/43",contacts:[{type:"phone",value:"89817133050"}]},
-{id:"dasha",role:"ПАРА",name:"Даша",age:"16 лет",photo:"photos/даша.jpg",details:"Рост 173, размер одежды: XS,S, размер обуви: 38,39",contacts:[{type:"phone",value:"+7 991 486 34 16"}]},
-{id:"sirenko",role:"Ученица Насти",name:"Сиренко Алиса",age:"9 лет",photo:"photos/Сиренко.jpg",details:"128 / 128р / 32 обувь",contacts:[]},
-{id:"erokhin",role:"ОХРАННИК ЛЕСКОВА",name:"Ерохин Александр",age:"29 лет",photo:"photos/Ерохин.jpg",details:"Рост 176 / одежда 50 / обувь 42-43 • Грудь 110 / талия 85 / бедра 100",contacts:[{type:"phone",value:"89650263610"},{type:"telegram",value:"@AleksanderE1996"}]}
-];
+  // ================================================================
+  // ДАННЫЕ С ЯВНЫМИ ПУТЯМИ К ФОТО (по фамилиям)
+  // ================================================================
+  const rolesData = [
+    {
+      date: "28.06",
+      role: "Охранник",
+      candidates: [
+        { name: "Александр Иванов", details: "Рост: 176 см, одежда: 52, обувь: 42", photo: "photos/Иванов.jpg", video: "https://vkvideo.ru/video_ext.php?oid=-221927186&id=456239119&hash=4fd94497c69c3606&hd=3" },
+        { name: "Ефремов Виктор Ильич", details: "Рост: 175 см, одежда: 48, обувь: 42", photo: "photos/Ефремов.jpg", video: "https://vkvideo.ru/video_ext.php?oid=-221927186&id=456239118&hash=c37c7a54e13ef74a&hd=3" },
+        { name: "Драница Виталий Анатольевич", details: "47 лет, рост: 175 см, одежда: 52, обувь: 40", photo: "photos/Драница.jpg", video: "https://vkvideo.ru/video_ext.php?oid=-221927186&id=456239117&hash=48f988ee1f388d10&hd=4" },
+        { name: "Пономарев Алексей Юрьевич", details: "37 лет, рост: 178 см, одежда: 52, обувь: 43", photo: "photos/Пономарев.jpg", video: "https://vkvideo.ru/video_ext.php?oid=-221927186&id=456239120&hash=a594cead6cc31a66&hd=3" },
+        { name: "Никулин Игорь", details: "Рост: 182 см, одежда: 50, обувь: 43", photo: "photos/Никулин.jpg", video: "https://vk.com/video_ext.php?oid=563995003&id=456239045&hash=a47d7fedd55b04e0&autoplay=1" }
+      ]
+    },
+    {
+      date: "28.06",
+      role: "Сказитель, Кощей, Царевна, Царевич",
+      candidates: [
+        { name: "Комлев Даниил", details: "6 лет, рост: 115 см", photo: "photos/Комлев.jpg", video: "https://vkvideo.ru/video_ext.php?oid=-221927186&id=456239121&hash=dda16f427cdf5377&hd=3" },
+        { name: "Комлева София", details: "8 лет, рост: 130 см", photo: "photos/Комлева.jpg", video: "https://vkvideo.ru/video_ext.php?oid=-221927186&id=456239121&hash=dda16f427cdf5377&hd=3" },
+        { name: "Саркисян Артур", details: "8 лет, рост: 136 см, одежда: 142, обувь: 35 (Царевич или Сказитель)", photo: "photos/Саркисян.jpg", video: "https://vkvideo.ru/video_ext.php?oid=-221927186&id=456239122&hash=80b30056a9a50bd2&hd=3" },
+        { name: "Алиса Петрова", details: "10 лет, рост: 136 см", photo: "photos/Петрова.jpg", video: "https://vkvideo.ru/video_ext.php?oid=-221927186&id=456239123&hash=2bb659356fa2de9d&hd=3" },
+        { name: "Шеина Майя", details: "8 лет, рост: 131 см, одежда: 128–134, обувь: 33", photo: "photos/Шеина.jpg", video: "https://vkvideo.ru/video_ext.php?oid=-221927186&id=456239124&hash=71a4ae1a7b330163&hd=3" },
+        { name: "Петров Даниил", details: "9 лет, рост: 140 см, одежда: 140, обувь: 35", photo: "photos/Петров.jpg", video: "https://vkvideo.ru/video_ext.php?oid=-221927186&id=456239125&hash=c51b15618d9eae0b&hd=3" },
+        { name: "Сидоров Арсений", details: "9 лет, рост: 135 см, обувь: 36", photo: "photos/Сидоров.jpg", video: "https://vkvideo.ru/video_ext.php?oid=-221927186&id=456239126&hash=705fc90a74151f26&hd=3" },
+        { name: "Котов Лука", details: "9 лет, рост: 135 см", photo: "photos/Котов.jpg", video: "https://vkvideo.ru/video_ext.php?oid=-221927186&id=456239127&hash=f2c13872346f0bb5&hd=3" },
+        { name: "Дайлид Теодор", details: "Данные не указаны", photo: "photos/Дайдид.jpg", video: "https://vkvideo.ru/video_ext.php?oid=-221927186&id=456239129&hash=a629bed70d136b52&hd=3" }
+      ]
+    },
+    {
+      date: "30.06",
+      role: "Мастер 1, Мастер 2",
+      candidates: [
+        { name: "Гененрайх Кирилл Алексеевич", details: "37 лет, рост: 180 см, одежда: 50, обувь: 44", photo: "photos/Гененрайх.jpg", video: "https://vkvideo.ru/video_ext.php?oid=-221927186&id=456239130&hash=1a7400700c1b8bf3&hd=3" },
+        { name: "Дмитрий Кюсснер", details: "Данные не указаны", photo: "photos/Кюсснер.jpg", video: "https://vkvideo.ru/video_ext.php?oid=-221927186&id=456239131&hash=e961998d91cbcc82&hd=3" },
+        { name: "Кряхтунов Сергей Игоревич", details: "Рост: 185 см, одежда: 50, обувь: 43", photo: "photos/Кряхтунов.jpg", video: "https://vkvideo.ru/video_ext.php?oid=-221927186&id=456239132&hash=8ecba5a73b23e089&hd=3" },
+        { name: "Балашов Артур", details: "27 лет, рост: 186 см, одежда (верх): XL, низ: 36, обувь: 43–44", photo: "photos/Балашов.jpg", video: "https://vkvideo.ru/video_ext.php?oid=-221927186&id=456239133&hash=5fbf8a57b12c70f4&hd=3" },
+        { name: "Сокольников Андрей", details: "39 лет, рост: 180 см, одежда: 48, обувь: 42", photo: "photos/Сокольников.jpg", video: "https://vkvideo.ru/video_ext.php?oid=-221927186&id=456239134&hash=557ec890f2054ba0&hd=3" },
+        { name: "Балыбердин Александр", details: "34 года, рост: 176 см, одежда: 48, обувь: 42", photo: "photos/Балыбердин.jpg", video: "https://vkvideo.ru/video_ext.php?oid=-221927186&id=456239135&hash=a9da016ff441d449&hd=3" }
+      ]
+    },
+    {
+      date: "05.07",
+      role: "Старушка",
+      candidates: [
+        { name: "Яковлева Наталия", details: "Рост: 162 см, одежда: 48, обувь: 40", photo: "photos/Яковлева.jpg", video: "https://vkvideo.ru/video_ext.php?oid=-221927186&id=456239136&hash=4a2b20aacfaf3d19&hd=3" },
+        { name: "Алексеева Валентина", details: "71 год, рост: 164 см, одежда: 56, обувь: 39", photo: "photos/Алексеева.jpg", video: "https://vkvideo.ru/video_ext.php?oid=-221927186&id=456239137&hash=c2ec7a3ed8e619fa&hd=3" }
+      ]
+    },
+    {
+      date: "05.07",
+      role: "Медбрат",
+      candidates: []
+    },
+    {
+      date: "06.07",
+      role: "Коллега 1, Коллега 2",
+      candidates: []
+    },
+    {
+      date: "12.07",
+      role: "Пациент",
+      candidates: []
+    }
+  ];
 
-const CHARACTERS_DB = {
-"Флешбэк — Маленькая Настя":{
-series:0,dates:[],approvedProbeId:null,probes:[
-{id:"shlykova",name:"Шлыкова Алёна",age:"7 лет",photo:"photos/Шлыкова.jpg",details:"Рост 123, размер одежды 128-134, обувь 32",extra:"",filmLink:"",videoUrl:"https://vkvideo.ru/video_ext.php?oid=-221927186&id=456239091&hash=d7a4d6dfa723e9e1&hd=4"},
-{id:"petrova",name:"Алиса Петрова",age:"10 лет",photo:"photos/Петрова.jpg",details:"136 / 134-140 / 35",extra:"",filmLink:"",videoUrl:"https://vkvideo.ru/video_ext.php?oid=-221927186&id=456239090&hash=a63868c524bd0b23&hd=4"},
-{id:"bradulina",name:"Брадулина Даша",age:"10 лет",photo:"photos/Брадулина.jpg",details:"Рост 140",extra:"",filmLink:"",videoUrl:"https://vkvideo.ru/video_ext.php?oid=-221927186&id=456239089&hash=a97b38a159df3a0b&hd=4"},
-{id:"popova",name:"Попова Алёна",age:"",photo:"photos/Попова.jpg",details:"Рост 140",extra:"",filmLink:"",videoUrl:"https://vkvideo.ru/video_ext.php?oid=-221927186&id=456239092&hash=5acbaf62935ebc73&hd=3"},
-{id:"dirko",name:"Дирко Дарина",age:"7 лет",photo:"photos/Дирко.jpg",details:"Рост 127, цвет глаз светло-серые (серо-голубые)",extra:"Визитку смогут записать 18.06",filmLink:"",videoUrl:""}
-],scene:null},
-"Продавец":{series:1,dates:["02.07"],approvedProbeId:null,probes:[],scene:{title:"1-46 / 2-49 / 3-3. ЗАПРАВКА",content:'<div class="scene-action"><strong>1-46. ЗАПРАВКА. ДЕНЬ 4:</strong> Егор стоит, отвернувшись от кассира, сняв очки и опустив маску, прихлёбывает кофе. Работает телевизор.</div><div class="scene-action">Диктор сообщает новости: смертельное ДТП — Марина Страхова... Егор резко поворачивается к экрану.</div><div class="scene-dialogue"><div class="scene-character">ДИКТОР ТВ</div><div class="scene-lines">Более года назад бесследно исчез муж Марины — Егор Страхов. На прошлой неделе мужчина был признан погибшим.</div></div><div class="scene-action">Егор неловко ставит стаканчик с кофе — падает, проливается. Егор бежит прочь, опрокинув стул.</div><div class="scene-action"><strong>2-49. ЗАПРАВКА. ДЕНЬ 7:</strong> Аня и Витька шепчутся между стеллажами. Аня снимает с полки бутылку газировки и пряники.</div><div class="scene-action">Витька уходит к кассе. Аня рассматривает полки. Вдруг мужская рука сзади зажимает ей рот — охранник уносит её.</div><div class="scene-action"><strong>3-3. ЗАПРАВКА. ДЕНЬ 7:</strong> Настя оббегает магазин, Данила и Олег разбегаются между стеллажами.</div><div class="scene-dialogue"><div class="scene-character">УЧАСТКОВЫЙ</div><div class="scene-lines">(работнице)<br>Скажите, с мальчиком был кто-то ещё?</div></div><div class="scene-dialogue"><div class="scene-character">РАБОТНИЦА</div><div class="scene-lines">Да, с ним ещё девочка была. Но тут её нет…</div></div><div class="scene-dialogue"><div class="scene-character">ДАНИЛА</div><div class="scene-lines">Камеры работают?</div></div><div class="scene-dialogue"><div class="scene-character">РАБОТНИЦА</div><div class="scene-lines">Только над кассами и у выхода. Девочка зашла с мальчиком, а потом — пропала.</div></div>'}},
-"Заправщик":{series:1,dates:["02.07"],approvedProbeId:null,probes:[],scene:{title:"1-46. ЗАПРАВКА. ДЕНЬ 4",content:'<div class="scene-action">Егор стоит, отвернувшись от кассира, прихлёбывает кофе.</div><div class="scene-action">Диктор сообщает о смертельном ДТП и исчезновении Егора Страхова. Егор в шоке.</div><div class="scene-action">Он неловко ставит стаканчик — падает, проливается. Егор бежит прочь, опрокинув стул.</div><div class="scene-action">Работник заправки, который подметал зал, отвлекается на шум, недовольно цокает, берёт тряпку...</div>'}},
-"Врач 3":{series:2,dates:["04.07"],approvedProbeId:null,probes:[],scene:{title:"2-42 / 2-45. БОЛЬНИЦА. ДЕНЬ 7",content:'<div class="scene-action"><strong>2-42. ПАЛАТА АЛЕКСЕЯ ПЕТРОВИЧА:</strong> Алексей Петрович лежит в больничной постели, подключенный к прибору. В палату заглядывает Настя.</div><div class="scene-dialogue"><div class="scene-character">НАСТЯ</div><div class="scene-lines">Алексей Петрович, к вам можно?</div></div><div class="scene-action">Она пропускает Аню. Девочка бежит к деду.</div><div class="scene-dialogue"><div class="scene-character">АНЯ</div><div class="scene-lines">Деда! Деда, а у тебя что, было два сына?</div></div><div class="scene-action">Лицо Алексея Петровича вздрагивает. Прибор начинает пищать.</div><div class="scene-dialogue"><div class="scene-character">НАСТЯ</div><div class="scene-lines">Алексей Петрович!</div></div><div class="scene-action">Настя бросается к кнопке вызова. Двери распахиваются, вбегают врачи.</div><div class="scene-action"><strong>2-45. КОРИДОР БОЛЬНИЦЫ:</strong> Настя, Данила, Лиза спорят.</div><div class="scene-dialogue"><div class="scene-character">ЛИЗА</div><div class="scene-lines">Это прекрасное предложение! Нужно продать дом и ферму!</div></div><div class="scene-dialogue"><div class="scene-character">НАСТЯ</div><div class="scene-lines">Почему мы вообще это обсуждаем? Это может только Алексей Петрович решать!</div></div><div class="scene-dialogue"><div class="scene-character">ДАНИЛА</div><div class="scene-lines">Доля здравого смысла здесь есть. На деньги, которые предлагает Лесков, можно прожить достойную старость.</div></div><div class="scene-action">В коридоре появляется ВРАЧ 2.</div><div class="scene-dialogue"><div class="scene-character">ВРАЧ 2</div><div class="scene-lines">Страховы? Вашего отца стабилизировали. Он заснул. Завтра приходите.</div></div><div class="scene-dialogue"><div class="scene-character">ДАНИЛА</div><div class="scene-lines">Спасибо.</div></div><div class="scene-action">Врач уходит. Данила обращается к Насте: «Девочку, конечно, мы заберем». Лиза возмущается. Настя ищет Аню — её нет.</div>'}},
-"Медсестра 2":{series:2,dates:["04.07"],approvedProbeId:null,probes:[],scene:{title:"2-41. БОЛЬНИЦА. У РЕГИСТРАТУРЫ. ДЕНЬ 7",content:'<div class="scene-action">Настя с Аней заглядывают в регистратуру.</div><div class="scene-dialogue"><div class="scene-character">НАСТЯ</div><div class="scene-lines">Страхов Алексей Петрович в какой палате лежит?</div></div><div class="scene-dialogue"><div class="scene-character">МЕДСЕСТРА-1</div><div class="scene-lines">Да куда ж вы толпой-то к нему? Вон стоят...</div></div><div class="scene-action">Настя оглядывается — видит Данилу и Лизу. Подходит Медсестра-2.</div><div class="scene-dialogue"><div class="scene-character">МЕДСЕСТРА-2</div><div class="scene-lines">(улыбнувшись)<br>Кто к Страхову? Сразу видно, что парочка. Пойдёмте за мной.</div></div><div class="scene-action">Все уходят. Медсестра-1 звонит по телефону.</div>'}},
-"Медсестра 1":{series:2,dates:["04.07"],approvedProbeId:null,probes:[],scene:{title:"2-41. БОЛЬНИЦА. У РЕГИСТРАТУРЫ. ДЕНЬ 7",content:'<div class="scene-dialogue"><div class="scene-character">МЕДСЕСТРА-1</div><div class="scene-lines">Да куда ж вы толпой-то к нему? По очереди хотя бы. И бахилы наденьте.</div></div><div class="scene-action">Медсестра-1 звонит по телефону.</div><div class="scene-dialogue"><div class="scene-character">МЕДСЕСТРА-1</div><div class="scene-lines">(в телефон)<br>Здравствуйте, Михаил Михайлович. Вы просили о состоянии здоровья Страхова сообщить... К нему сын приехал. И ещё девушка. Да, сын. Точно. Всегда рада помочь.</div></div>'}},
-"Водитель охранник Лескова":{series:2,dates:["20.06","26.06","02.07","04.07"],approvedProbeId:null,probes:[
-{id:"kovalev",name:"Александр Ковалёв",age:"39 лет",photo:"photos/Ковалев.jpg",details:"170 / 48 / 41",extra:"",filmLink:"https://casting.filmtoolz.ru/3483718",videoUrl:"https://vkvideo.ru/video_ext.php?oid=-221927186&id=456239075&hash=cb139c4117373d02&hd=4"},
-{id:"komlev",name:"Комлев Дмитрий",age:"35 лет",photo:"photos/Комлев.jpg",details:"183 / 52 / 44",extra:"",filmLink:"https://www.kino-teatr.ru/kino/acter/bitpart/m/ros/876731/bio/",videoUrl:"https://vkvideo.ru/video_ext.php?oid=-221927186&id=456239076&hash=dd89ad2bd3d84059&hd=3"},
-{id:"polozov",name:"Полозов Михаил",age:"43 года",photo:"photos/Полозов.jpg",details:"180 / 52 / 43",extra:"",filmLink:"https://www.kino-teatr.ru/kino/acter/bitpart/m/ros/515281/foto/i2/",videoUrl:"https://vkvideo.ru/video_ext.php?oid=-221927186&id=456239082&hash=e0577965413ca5b5&hd=3"},
-{id:"bogdanov",name:"Богданов Антон",age:"37 лет",photo:"photos/Богданов.jpg",details:"",extra:"",filmLink:"https://ftoolz.ru/4020591/",videoUrl:"https://vkvideo.ru/video_ext.php?oid=-221927186&id=456239078&hash=1ebe80ec31866720&hd=4"},
-{id:"bashanov",name:"Башанов Антон",age:"46 лет",photo:"photos/Башанов.jpg",details:"195 / 58 (плечи 62) / 46",extra:"",filmLink:"",videoUrl:"https://vkvideo.ru/video_ext.php?oid=-221927186&id=456239138&hash=e91e5a6354fe2ca9&hd=3"},
-{id:"pol",name:"Поль Игорь",age:"",photo:"photos/Поль.jpg",details:"187 / 52 / 43",extra:"",filmLink:"",videoUrl:"https://vkvideo.ru/video_ext.php?oid=-221927186&id=456239139&hash=18b30f92dde916ad&hd=3"},
-{id:"goryunov",name:"Горюнов Сергей",age:"36 лет",photo:"photos/Горюнов.jpg",details:"181 / 50 / 42",extra:"",filmLink:"",videoUrl:"https://vkvideo.ru/video_ext.php?oid=-221927186&id=456239140&hash=f8f57666576c5daf&hd=3"},
-{id:"stepanov",name:"Степанов Павел",age:"45 лет",photo:"photos/Степанов.jpg",details:"195 / 62 / 45",extra:"",filmLink:"",videoUrl:"https://vkvideo.ru/video_ext.php?oid=-221927186&id=456239141&hash=ac1e68f9a8532b82&hd=3"},
-{id:"bakhmatskiy",name:"Бахмацкий Михаил Викторович",age:"37 лет",photo:"photos/Бахмацкий.jpg",details:"180 / 50 / 41",extra:"",filmLink:"",videoUrl:"https://vkvideo.ru/video_ext.php?oid=-221927186&id=456239142&hash=550a7a3ad29640d2&hd=3"}
-],scene:{title:"3-10. ЛЕС. САЛОН АВТОМОБИЛЯ ЛЕСКОВА. ДЕНЬ 8",content:'<div class="scene-action">Егор порывисто обнимает спящую Аню, она просыпается.</div><div class="scene-dialogue"><div class="scene-character">АНЯ</div><div class="scene-lines">Папа! Папочка! Я тебя нашла! Я знала, что ты живой! Ты же приходил ко мне! А никто не верил...</div></div><div class="scene-action">Егор с трудом глотает слёзы, целует её и обнимает.</div><div class="scene-dialogue"><div class="scene-character">ЕГОР</div><div class="scene-lines">Погоди, Анют, послушай. Да, я приходил, оставил важный документ - тебе на будущее. И скоро вы с дедом получите деньги за мою смерть. Понимаешь?</div></div><div class="scene-action">Аня серьёзно слушает, вникает.</div><div class="scene-dialogue"><div class="scene-character">ЕГОР</div><div class="scene-lines">В общем, то, что я жив, — это наш с тобой самый большой секрет, дочка. Тайны ты хранить умеешь! Даже маме не выдала, какой подарок я ей приготовил на день рождения...</div></div><div class="scene-dialogue"><div class="scene-character">АНЯ</div><div class="scene-lines">Жалко, что мамочка не смогла полетать на том воздушном шаре. Это был её последний день рождения...</div></div><div class="scene-action">Егор сгребает дочь в охапку, качает, утешая, в душе воя.</div><div class="scene-dialogue"><div class="scene-character">ЕГОР</div><div class="scene-lines">Потерпи, малыш. Я что-нибудь придумаю и вернусь за тобой. Только никому ни слова! Клянись!</div></div><div class="scene-dialogue"><div class="scene-character">АНЯ (поднимает ладошку)</div><div class="scene-lines">Клянусь! Погоди, надо кулачками. Вот так...</div></div><div class="scene-action">Аня складывает кулачок себе и отцу — стучат друг об друга.</div><div class="scene-dialogue"><div class="scene-character">ОХРАННИК 1</div><div class="scene-lines">Выходи.</div></div><div class="scene-action">Егор улыбается, чмокает её и выходит. Аня смотрит, как его уводит охранник. Водитель с переднего сидения обращается к Ане.</div><div class="scene-dialogue"><div class="scene-character">ВОДИТЕЛЬ-ОХРАННИК</div><div class="scene-lines">Ну, что? Не врали мы тебе, что мы папины друзья? Главное, ты никому ничего не говори! Тогда всё в порядке будет с папой твоим.</div></div><div class="scene-action">Аня смотрит настороженно, кивает.</div><div class="scene-action" style="margin-top:1rem;font-style:italic;color:var(--text-muted);">Также водитель-охранник присутствует в сценах: 1-27, 1-28, 2-6, 2-7, 2-9, 2-44, 2-46, 2-49, 4-45 (без слов).</div>'}},
-"Дядька":{series:3,dates:["01.07"],approvedProbeId:null,probes:[
-{id:"korpachev",name:"Корпачев Олег",age:"",photo:"photos/Корпачев.jpg",details:"180 / 50 / 43",extra:"",filmLink:"",videoUrl:"https://vkvideo.ru/video_ext.php?oid=-221927186&id=456239093&hash=839bfc70bb5469fa&hd=3"},
-{id:"lokshin",name:"Локшин Михаил",age:"",photo:"photos/Локшин.jpg",details:"",extra:"",filmLink:"",videoUrl:"https://vkvideo.ru/video_ext.php?oid=-221927186&id=456239100&hash=7429f6095cf0e917&hd=3"},
-{id:"frolov",name:"Евгений Фролов",age:"",photo:"photos/Фролов.jpg",details:"",extra:"",filmLink:"",videoUrl:"https://vkvideo.ru/video_ext.php?oid=-221927186&id=456239099&hash=918add4934b05652&hd=3"},
-{id:"kucherov",name:"Кучеров Сергей",age:"52 года",photo:"photos/Кучеров.jpg",details:"185 / 54-56 / 43",extra:"",filmLink:"",videoUrl:"https://vkvideo.ru/video_ext.php?oid=-221927186&id=456239098&hash=e77847e6c17016a7&hd=3"},
-{id:"dolzhenkov",name:"Долженков Дмитрий Владимирович",age:"47 лет",photo:"photos/Долженков.jpg",details:"158 / 48 / 41",extra:"",filmLink:"",videoUrl:"https://vkvideo.ru/video_ext.php?oid=-221927186&id=456239097&hash=8cd2aab437474e5d&hd=3"},
-{id:"kazenkin",name:"Казенкин Александр",age:"",photo:"photos/Казенкин.jpg",details:"176 / 50 / 42",extra:"",filmLink:"",videoUrl:"https://vkvideo.ru/video_ext.php?oid=-221927186&id=456239096&hash=cb43aedcce5239d7&hd=3"},
-{id:"toshchevikov",name:"Тощевиков Алексей",age:"44 года",photo:"photos/Тощевиков.jpg",details:"Рост 180 / одежда 50 / обувь 42",extra:"",filmLink:"",videoUrl:"https://vkvideo.ru/video_ext.php?oid=-221927186&id=456239095&hash=75d371eab4a52051&hd=3"},
-{id:"shaposhnikov",name:"Шапошников Алексей",age:"",photo:"photos/Шапошников.jpg",details:"",extra:"",filmLink:"",videoUrl:"https://vkvideo.ru/video_ext.php?oid=-221927186&id=456239094&hash=20d81cfde778614f&hd=3"}
-],scene:{title:"3-13. ДВОР ДОМА СТРАХОВЫХ. ДЕНЬ 8",content:'<div class="scene-action">Старенькая девятка тормозит. Из неё выходит дядька, открывает дверцу, выпуская Аню.</div><div class="scene-action">По улице бредут грустные Данила и Настя. Они видят Аню и бегут к ней.</div><div class="scene-dialogue"><div class="scene-character">НАСТЯ</div><div class="scene-lines">Анечка! Вернулась! Ты цела? Тебя никто не обижал?</div></div><div class="scene-dialogue"><div class="scene-character">ДЯДЬКА</div><div class="scene-lines">Я извиняюсь, родители! Тут это... Написано: награда - сто тыщ.</div></div><div class="scene-dialogue"><div class="scene-character">ДАНИЛА</div><div class="scene-lines">Сейчас. Вы только скажите, где вы её нашли?</div></div><div class="scene-dialogue"><div class="scene-character">ДЯДЬКА</div><div class="scene-lines">Да вдоль дороги, смотрю, – бредёт. А до этого фотографии её видел. Ну, точно она!</div></div><div class="scene-action">Данила кивает, достает из кармана, протягивает ему конверт, он заглядывает внутрь, пожимает руку.</div><div class="scene-dialogue"><div class="scene-character">ДАНИЛА</div><div class="scene-lines">Спасибо вам, век не забуду!</div></div><div class="scene-action">Настя ведет Аню в дом. Со своего двора на них смотрит Олег, смаргивает скупую слезу.</div><div class="scene-dialogue"><div class="scene-character">ОЛЕГ</div><div class="scene-lines">(бормочет)<br>Встретились, значит. Вот же Егор…</div></div>'}},
-"Эксперт":{series:4,dates:["21.06"],approvedProbeId:null,probes:[
-{id:"orlov",name:"Орлов Владислав",age:"",photo:"photos/Орлов.jpg",details:"",extra:"",filmLink:"",videoUrl:"https://vkvideo.ru/video_ext.php?oid=-221927186&id=456239108&hash=1568867d2b71b1f5&hd=3"},
-{id:"sidorov",name:"Сидоров Константин",age:"38 лет",photo:"photos/Сидоров.jpg",details:"187 / 48-50 / 43",extra:"",filmLink:"",videoUrl:"https://vkvideo.ru/video_ext.php?oid=-221927186&id=456239107&hash=ca8119a7a496e60a&hd=3"},
-{id:"volgin",name:"Павел Волгин",age:"",photo:"photos/Волгин.jpg",details:"",extra:"",filmLink:"",videoUrl:"https://vkvideo.ru/video_ext.php?oid=-221927186&id=456239106&hash=63d62195dc30858b&hd=3"},
-{id:"alekseev",name:"Алексеев Денис",age:"38 лет",photo:"photos/Алексеев.jpg",details:"180 / 52 / 45",extra:"",filmLink:"",videoUrl:"https://vkvideo.ru/video_ext.php?oid=-221927186&id=456239105&hash=1d1c8416b93d8798&hd=3"},
-{id:"emelyanov",name:"Емельянов Александр",age:"",photo:"photos/Емельянов.jpg",details:"",extra:"",filmLink:"",videoUrl:"https://vkvideo.ru/video_ext.php?oid=-221927186&id=456239104&hash=2396a1ca99bd4adf&hd=3"},
-{id:"aleksandrov",name:"Александров Антон",age:"",photo:"photos/Александров.jpg",details:"189 / 52-54 / 43",extra:"",filmLink:"",videoUrl:"https://vkvideo.ru/video_ext.php?oid=-221927186&id=456239103&hash=dbabde3a1b303a4e&hd=3"},
-{id:"konstantinovskiy",name:"Константиновский Иван",age:"47 лет",photo:"photos/Константиновский.jpg",details:"178 / 78 / 48-50",extra:"",filmLink:"",videoUrl:"https://vkvideo.ru/video_ext.php?oid=-221927186&id=456239102&hash=8858f2b2c19612be&hd=3"},
-{id:"vasilev",name:"Васильев Алексей",age:"40-50 (игровой)",photo:"photos/Васильев.jpg",details:"183 / 50 / 43",extra:"",filmLink:"",videoUrl:"https://vkvideo.ru/video_ext.php?oid=-221927186&id=456239101&hash=966b3b215bcb1e7a&hd=3"},
-{id:"singov",name:"Синьгов Владимир",age:"",photo:"photos/Синьгов.jpg",details:"173 / 50 / 42",extra:"",filmLink:"",videoUrl:"https://vk.com/video_ext.php?oid=2943640&id=456240411&hd=3"}
-],scene:{title:"4-42. КАБИНЕТ ИВАНА. НОЧЬ 12",content:'<div class="scene-action">Иван смотрит на снимки Насти на экране. На стене — фотографии семьи Страховых и Лескова.</div><div class="scene-action">Стук в дверь. Входит эксперт.</div><div class="scene-dialogue"><div class="scene-character">ЭКСПЕРТ</div><div class="scene-lines">Вань, экспертиза видеорегистратора из машины Марины Страховой готова.</div></div><div class="scene-dialogue"><div class="scene-character">ЭКСПЕРТ</div><div class="scene-lines">Во внутренней памяти остались последние видео, мы даже расшифровку по губам смогли.</div></div><div class="scene-action">Иван читает документ, глаза лезут на лоб. Он смотрит на фото Данилы, зачёркивает знак вопроса.</div>'}},
-"Работник Кухни":{series:4,dates:["26.06"],approvedProbeId:null,probes:[
-{id:"dranitsa",name:"Драница Виталий",age:"47 лет",photo:"photos/Драница.jpg",details:"Рост 175 / одежда 52 / обувь 40",extra:"",filmLink:"",videoUrl:"https://vkvideo.ru/video_ext.php?oid=-221927186&id=456239088&hash=23b8ad50d78a8edf&hd=3"},
-{id:"koryakov",name:"Коряков Николай Викторович",age:"49 лет",photo:"photos/Коряков.jpg",details:"191 / 54 / 45",extra:"",filmLink:"",videoUrl:"https://vkvideo.ru/video_ext.php?oid=-221927186&id=456239085&hash=50e8569807fc4154&hd=3"},
-{id:"pigin",name:"Пигин Александр",age:"40 лет",photo:"photos/Пигин.jpg",details:"Рост 168 / вес 78 кг / обувь 40 / одежда 48-50",extra:"",filmLink:"",videoUrl:"https://vkvideo.ru/video_ext.php?oid=-221927186&id=456239084&hash=899c23412b6d6ca0&hd=3"},
-{id:"kyussner",name:"Кюсснер Дмитрий",age:"",photo:"photos/Кюсснер.jpg",details:"Рост 185 / одежда 50 / обувь 44",extra:"",filmLink:"",videoUrl:"https://vkvideo.ru/video_ext.php?oid=-221927186&id=456239087&hash=0cb53eee10a66ce8&hd=4"},
-{id:"zhezhel",name:"Жежель Кирилл",age:"22 года",photo:"photos/Жежель.jpg",details:"",extra:"",filmLink:"",videoUrl:"https://vkvideo.ru/video_ext.php?oid=-221927186&id=456239083&hash=ac4262c9945274d4&hd=3"},
-{id:"volkov",name:"Волков Виктор",age:"",photo:"photos/Волков.jpg",details:"",extra:"",filmLink:"",videoUrl:"https://vkvideo.ru/video_ext.php?oid=-221927186&id=456239086&hash=07580bba7a1d7346&hd=3"}
-],scene:{title:"4-34 / 4-36. УСАДЬБА ЛЕСКОВА",content:'<div class="scene-action">«Каблучок» Олега стоит у чёрного входа. Олег достаёт из машины ящик, несёт в подвал.</div><div class="scene-action">Работник кухни скучает, подпирая притолоку, помогать не собирается.</div><div class="scene-action">Олег берёт очередной ящик. Косится на работника. Тот "втыкает" в смартфон.</div><div class="scene-action">Олег берёт ружьё, вешает на плечо. Кладёт в ящик фомку. Проходит мимо — работник даже не поднял головы.</div><div class="scene-dialogue"><div class="scene-character">РАБОТНИК КУХНИ</div><div class="scene-lines">Мужик, долго ещё?</div></div>'}},
-"Охранник Владений Лескова":{series:4,dates:["26.06"],approvedProbeId:null,probes:[
-{id:"nekrasov",name:"Некрасов Богдан",age:"",photo:"photos/Некрасов.jpg",details:"Рост 178 / размер 50 / обувь 43",extra:"",filmLink:"",videoUrl:"https://vkvideo.ru/video_ext.php?oid=-221927186&id=456239112&hash=8c8854b697d10f87&hd=3"},
-{id:"andrianov",name:"Андрианов Александр",age:"33 года",photo:"photos/Андрианов.jpg",details:"177 / 56 / 43",extra:"",filmLink:"",videoUrl:"https://vkvideo.ru/video_ext.php?oid=-221927186&id=456239111&hash=f24c5896c4f4fc75&hd=3"},
-{id:"nikulin",name:"Никулин Андрей",age:"46 лет",photo:"photos/Никулин.jpg",details:"189 / 56 / 45",extra:"",filmLink:"",videoUrl:"https://vkvideo.ru/video_ext.php?oid=-221927186&id=456239110&hash=9290df0b60e914f9&hd=3"},
-{id:"merkulov",name:"Меркулов Олег",age:"",photo:"photos/Меркулов.jpg",details:"Рост 187 / одежда 54-56 / обувь 44-45",extra:"",filmLink:"",videoUrl:"https://vkvideo.ru/video_ext.php?oid=-221927186&id=456239109&hash=74fd6673659555f0&hd=3"}
-],scene:{title:"4-33. УСАДЬБА ЛЕСКОВА. ДЕНЬ 12",content:'<div class="scene-action">«Каблучок» Олега подъезжает к воротам усадьбы.</div><div class="scene-dialogue"><div class="scene-character">ОЛЕГ</div><div class="scene-lines">(охраннику)<br>Открывай!</div></div><div class="scene-dialogue"><div class="scene-character">ОХРАННИК</div><div class="scene-lines">Вы к кому? Не было распоряжения.</div></div><div class="scene-action">Охранник вызывает по рации. Получает отбой. Олег показывает накладную. Снова связь — ворота открывают.</div><div class="scene-action"><strong>4-25:</strong> Олег выходит из леса к усадьбе. У ворот — охранник. Олег отступает.</div><div class="scene-action">Он обходит усадьбу, замечает камеру на заборе. Звонит телефон — Олег прячется.</div>'}},
-"Врач 4":{series:4,dates:["04.07"],approvedProbeId:null,probes:[],scene:{title:"4-28. БОЛЬНИЦА. РЕАНИМАЦИОННЫЙ БЛОК АНИ",content:'<div class="scene-action">Настя и Данила стоят в коридоре, смотрят на Аню. Приходит врач.</div><div class="scene-dialogue"><div class="scene-character">ВРАЧ</div><div class="scene-lines">Страховы?</div></div><div class="scene-dialogue"><div class="scene-character">ДАНИЛА</div><div class="scene-lines">Да, это мы!</div></div><div class="scene-dialogue"><div class="scene-character">ВРАЧ</div><div class="scene-lines">Стабилизировали. Но в лёгких могла остаться вода. Девочку оставляем под наблюдением.</div></div><div class="scene-dialogue"><div class="scene-character">ДАНИЛА</div><div class="scene-lines">Мы останемся с ней!</div></div><div class="scene-dialogue"><div class="scene-character">ВРАЧ</div><div class="scene-lines">Возвращайтесь утром, мамам и папам тоже нужно отдохнуть.</div></div><div class="scene-action">Настя и Данила переглядываются. Настю колотит. Данила обнимает её.</div>'}},
-"Врач скорой":{series:4,dates:["14.07"],approvedProbeId:null,probes:[],scene:{title:"4-24. БЕРЕГ ОЗЕРА. ДЕНЬ 12",content:'<div class="scene-action">На берегу стоит машина скорой. Анечка жива, отплёвывает воду. Врачи скорой оказывают помощь.</div><div class="scene-action">Сотрудники скорой поднимают Аню, заносят в скорую.</div><div class="scene-dialogue"><div class="scene-character">ВРАЧ</div><div class="scene-lines">Родители, вы нам мешаете! Здесь места нет! Вы следом поезжайте. В детскую краевую везём.</div></div><div class="scene-action">Двери закрываются. Машина скорой уезжает с мигалкой.</div>'}}
-};
+  // ================================================================
+  // СПИСОК УТВЕРЖДЁННЫХ (заполняется вручную)
+  // ================================================================
+  const approved = [
+    // Пример: { name: "Иванов Александр", role: "Охранник", date: "28.06" }
+  ];
 
-let isApprovedExpanded=false;
-function escapeHtml(s){if(!s)return '';return s.replace(/[&<>]/g,function(m){if(m==='&')return '&amp;';if(m==='<')return '&lt;';if(m==='>')return '&gt;';return m;})}
-function formatPhoneForLink(p){return p.replace(/[^0-9+]/g,'')}
-
-function renderApprovedActors(){
- const c=document.getElementById('approvedListContainer');
- if(APPROVED_ACTORS.length===0){c.innerHTML='<div class="empty-approved">✨ Пока нет утверждённых актёров</div>';return;}
- let html='';
- for(const a of APPROVED_ACTORS){
-  html+=`<div class="approved-item" data-id="${a.id}"><div class="approved-photo"><img src="${a.photo}" alt="${a.name}" data-photo="${a.photo}" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="approved-photo-placeholder" style="display:none">${a.name.charAt(0)}</div></div><div class="approved-info"><div class="approved-role">${escapeHtml(a.role)}</div><div class="approved-actor-name">${escapeHtml(a.name)}</div><div class="approved-details">${escapeHtml(a.age)} • ${escapeHtml(a.details)}</div>`;
-  for(const ct of a.contacts){
-   if(ct.type==='phone'){const cl=formatPhoneForLink(ct.value);html+=`<a href="tel:${cl}" class="approved-contact-btn">📞 ${ct.value}</a>`;}
-   else if(ct.type==='telegram'){html+=`<a href="https://t.me/${ct.value.replace('@','')}" target="_blank" class="approved-tg-btn">✈️ ${ct.value}</a>`;}
+  // ================================================================
+  // РЕНДЕР УТВЕРЖДЁННЫХ
+  // ================================================================
+  function renderApproved() {
+    const container = document.getElementById('approvedList');
+    if (approved.length === 0) {
+      container.innerHTML = `<span class="empty-approved">Пока никого не утвердили</span>`;
+      return;
+    }
+    let html = '';
+    approved.forEach(a => {
+      html += `<span class="approved-item">${a.name} (${a.role})</span>`;
+    });
+    container.innerHTML = html;
   }
-  html+='</div></div>';
- }
- c.innerHTML=html;
- document.querySelectorAll('.approved-photo img').forEach(img=>{img.addEventListener('click',function(e){e.stopPropagation();const url=this.getAttribute('data-photo');if(url)openImageModal(url);});});
-}
 
-document.getElementById('approvedHeader').addEventListener('click',function(){
- const list=document.getElementById('approvedList'),icon=document.getElementById('approvedToggleIcon');
- if(isApprovedExpanded){list.classList.remove('expanded');icon.textContent='▼';isApprovedExpanded=false;}
- else{list.classList.add('expanded');icon.textContent='▲';isApprovedExpanded=true;}
-});
+  // ================================================================
+  // РЕНДЕР ГЛАВНОГО ЭКРАНА
+  // ================================================================
+  function renderMainScreen() {
+    const container = document.getElementById('rolesContainer');
+    const groups = {};
+    rolesData.forEach(item => {
+      if (!groups[item.date]) groups[item.date] = [];
+      groups[item.date].push(item);
+    });
 
-function renderExtras(){
- const container=document.getElementById('extrasContainer');
- const extras=[];for(const [name,data] of Object.entries(CHARACTERS_DB)){if(data.series===0)extras.push({name,data});}
- if(extras.length===0){container.innerHTML='';return;}
- let html=`<div class="series-section-title" style="margin-top:0;">🎬 Вне серий</div><div class="series-grid">`;
- for(const ex of extras){
-  const datesHtml=ex.data.dates&&ex.data.dates.length>0?`<div class="character-dates">${ex.data.dates.map(d=>`<span class="date-badge">📅 ${d}</span>`).join('')}</div>`:'';
-  html+=`<div class="series-card"><div class="card-header"><div class="series-number">${escapeHtml(ex.name)}</div></div><div class="characters-list"><div class="character-items"><li class="character-item" data-char="${escapeHtml(ex.name)}"><div class="character-name">${escapeHtml(ex.name)}</div>${datesHtml}</li></div></div></div>`;
- }
- html+='</div>';
- container.innerHTML=html;
- document.querySelectorAll('#extrasContainer .character-item').forEach(el=>{el.addEventListener('click',function(){openCharacterModal(this.getAttribute('data-char'));});});
-}
-
-function getCharactersBySeries(s){const r=[];for(const [n,d] of Object.entries(CHARACTERS_DB)){if(d.series===s)r.push({name:n,dates:d.dates});}return r;}
-
-function renderSceneHTML(scene){if(!scene||!scene.content)return '';return `<div class="scene-block"><div class="scene-header" onclick="toggleScene(this)"><div class="scene-title"><span class="scene-flag">📖</span><span>${escapeHtml(scene.title)}</span></div><button class="toggle-scene-btn">▶ Развернуть</button></div><div class="scene-content">${scene.content}</div><div style="padding:0 1rem 1rem 1rem;display:none" class="scene-probes-btn"><button class="go-to-probes-btn" onclick="scrollToProbes()">🎬 Перейти к пробам ↓</button></div></div>`;}
-
-function renderSeries(){
- const container=document.getElementById('seriesContainer');
- let html='<div class="series-grid">';
- for(let s=1;s<=4;s++){
-  const chars=getCharactersBySeries(s);
-  html+=`<div class="series-card"><div class="card-header"><div class="series-number">🎞️ Серия ${s}<span class="badge-count">${chars.length} перс.</span></div></div><div class="characters-list"><div class="character-items">`;
-  if(chars.length===0)html+='<div class="empty-message">✨ Персонажи скоро появятся</div>';
-  else for(const ch of chars){
-   const datesHtml=ch.dates.length>0?`<div class="character-dates">${ch.dates.map(d=>`<span class="date-badge">📅 ${d}</span>`).join('')}</div>`:'';
-   html+=`<li class="character-item" data-char="${escapeHtml(ch.name)}"><div class="character-name">${escapeHtml(ch.name)}</div>${datesHtml}</li>`;
+    let html = '';
+    for (const [date, items] of Object.entries(groups)) {
+      html += `<div class="date-group">`;
+      html += `<div class="date-label">📅 ${date}</div>`;
+      items.forEach(roleItem => {
+        const count = roleItem.candidates.length;
+        html += `
+          <button class="role-btn" onclick="openCandidates('${roleItem.role}', '${roleItem.date}')">
+            ${roleItem.role}
+            <span class="badge">${count} проб</span>
+          </button>
+        `;
+      });
+      html += `</div>`;
+    }
+    container.innerHTML = html;
   }
-  html+='</div></div></div>';
- }
- html+='</div>';
- container.innerHTML=html;
- document.querySelectorAll('#seriesContainer .character-item').forEach(el=>{el.addEventListener('click',function(){openCharacterModal(this.getAttribute('data-char'));});});
-}
 
-function openCharacterModal(charName){
- const modal=document.getElementById('probeModal'),modalContent=document.getElementById('modalDynamicContent');
- const data=CHARACTERS_DB[charName];
- const sceneHtml=data.scene?renderSceneHTML(data.scene):'';
- let probesHtml='<div class="probes-section"><div class="probes-title">🎭 Пробы</div>';
- if(!data.probes||data.probes.length===0)probesHtml+='<div class="empty-probes">📹 Пробы для этого персонажа скоро появятся.</div>';
- else{
-  probesHtml+='<div class="probes-grid">';
-  for(let idx=0;idx<data.probes.length;idx++){
-   const p=data.probes[idx];
-   const photoPath=p.photo&&p.photo.trim()!==''?p.photo:'https://via.placeholder.com/300x300?text=Нет+фото';
-   const isApproved=data.approvedProbeId===p.id;
-   const approvedMark=isApproved?'<span class="approved-tag">✅ Утверждён</span>':'';
-   const filmLinkHtml=p.filmLink?`<a href="${escapeHtml(p.filmLink)}" target="_blank" class="probe-film-link">🎬 Фильмография</a>`:'';
-   const videoBtnHtml=p.videoUrl&&p.videoUrl.trim()!==''?`<button class="watch-video-btn" data-video="${escapeHtml(p.videoUrl)}">🎥 Смотреть видео</button>`:'';
-   probesHtml+=`<div class="probe-card ${isApproved?'approved-card':''}"><div class="probe-photo"><img src="${escapeHtml(photoPath)}" alt="${escapeHtml(p.name)}" class="probe-img" data-photo="${escapeHtml(photoPath)}"></div><div class="probe-name">${escapeHtml(p.name)} ${approvedMark}</div>${p.age?`<div class="probe-details">${escapeHtml(p.age)}</div>`:''}${p.details?`<div class="probe-details">${escapeHtml(p.details)}</div>`:''}${p.extra?`<div class="probe-desc">${escapeHtml(p.extra)}</div>`:''}${filmLinkHtml}${videoBtnHtml}</div>`;
+  // ================================================================
+  // ОТКРЫТЬ КАНДИДАТОВ
+  // ================================================================
+  let currentRole = null;
+
+  function openCandidates(role, date) {
+    currentRole = { role, date };
+    const found = rolesData.find(r => r.role === role && r.date === date);
+    if (!found) return;
+
+    document.getElementById('mainScreen').classList.remove('active');
+    document.getElementById('candidatesScreen').classList.add('active');
+    document.getElementById('candidatesTitle').textContent = `${role} — ${date}`;
+
+    const list = document.getElementById('candidatesList');
+    if (found.candidates.length === 0) {
+      list.innerHTML = `<div class="empty-message">Нет кандидатов на эту роль</div>`;
+      return;
+    }
+
+    let html = '';
+    found.candidates.forEach(cand => {
+      html += `
+        <div class="candidate-card">
+          <div class="candidate-photo" onclick="openPhoto('${cand.photo}')">
+            <img src="${cand.photo}" alt="${cand.name}" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+            <div class="placeholder" style="display:none;">Фото</div>
+          </div>
+          <div class="candidate-info">
+            <div class="candidate-name">${cand.name}</div>
+            <div class="candidate-details">${cand.details}</div>
+            <button class="video-btn" onclick="openVideo('${cand.video}')">▶ Смотреть видео</button>
+          </div>
+        </div>
+      `;
+    });
+    list.innerHTML = html;
   }
-  probesHtml+='</div>';
- }
- probesHtml+='</div>';
- modalContent.innerHTML=`<div class="modal-title">🎭 ${escapeHtml(charName)}</div><div class="modal-subtitle">${data.dates.length>0?`📅 Даты съёмок: ${data.dates.join(', ')}`:''}</div>${sceneHtml}${probesHtml}`;
- modal.classList.add('active');
- setTimeout(()=>{const btn=document.querySelector('#modalDynamicContent .go-to-probes-btn');if(btn)btn.onclick=()=>scrollToProbes();},50);
- document.querySelectorAll('.probe-img').forEach(img=>{img.addEventListener('click',function(e){e.stopPropagation();const url=this.getAttribute('data-photo');if(url)openImageModal(url);});});
- document.querySelectorAll('.watch-video-btn').forEach(btn=>{btn.addEventListener('click',function(){const url=this.getAttribute('data-video');if(url&&url.trim())openVideoModal(url);else alert('Ссылка на видео отсутствует');});});
-}
 
-function openVideoModal(url){
- const modal=document.getElementById('videoModal'),container=document.getElementById('videoIframeContainer');
- let embed=url;
- if(url.includes('vkvideo.ru')||url.includes('vk.com/video_ext.php'))embed=url;
- else if(url.includes('yandex.net'))embed=url;
- else if(url.includes('youtu.be')||url.includes('youtube.com')){
-  if(url.includes('watch?v='))embed=url.replace('watch?v=','embed/');
-  else if(url.includes('youtu.be/')){const id=url.split('/').pop();embed='https://www.youtube.com/embed/'+id;}
-  else embed=url;
- }
- container.innerHTML=`<iframe src="${embed}" frameborder="0" allow="autoplay; encrypted-media; fullscreen; picture-in-picture; screen-wake-lock;" allowfullscreen></iframe>`;
- modal.classList.add('active');
-}
+  // ================================================================
+  // НАЗАД
+  // ================================================================
+  function goBack() {
+    document.getElementById('candidatesScreen').classList.remove('active');
+    document.getElementById('mainScreen').classList.add('active');
+    currentRole = null;
+  }
 
-window.toggleScene=function(header){const block=header.closest('.scene-block'),content=block.querySelector('.scene-content'),btn=block.querySelector('.toggle-scene-btn'),probesDiv=block.querySelector('.scene-probes-btn');if(content.classList.contains('expanded')){content.classList.remove('expanded');btn.textContent='▶ Развернуть';if(probesDiv)probesDiv.style.display='none';}else{content.classList.add('expanded');btn.textContent='▼ Свернуть';if(probesDiv)probesDiv.style.display='block';}};
-window.scrollToProbes=function(){const sec=document.querySelector('#modalDynamicContent .probes-section');if(sec)sec.scrollIntoView({behavior:'smooth',block:'start'});};
-function openImageModal(src){document.getElementById('fullscreenImage').src=src;document.getElementById('imageModal').classList.add('active');}
+  // ================================================================
+  // МОДАЛКИ
+  // ================================================================
+  function openVideo(url) {
+    const modal = document.getElementById('videoModal');
+    const iframe = document.getElementById('videoIframe');
+    iframe.src = url;
+    modal.style.display = 'flex';
+  }
 
-document.getElementById('closeProbeModal').addEventListener('click',function(){document.getElementById('probeModal').classList.remove('active');});
-document.getElementById('closeImageBtn').addEventListener('click',function(){document.getElementById('imageModal').classList.remove('active');});
-document.getElementById('closeVideoBtn').addEventListener('click',function(){document.getElementById('videoModal').classList.remove('active');document.getElementById('videoIframeContainer').innerHTML='';});
-window.addEventListener('click',function(e){if(e.target===document.getElementById('imageModal'))document.getElementById('imageModal').classList.remove('active');if(e.target===document.getElementById('videoModal')){document.getElementById('videoModal').classList.remove('active');document.getElementById('videoIframeContainer').innerHTML='';}if(e.target===document.getElementById('probeModal'))document.getElementById('probeModal').classList.remove('active');});
+  function closeVideoModal() {
+    document.getElementById('videoModal').style.display = 'none';
+    document.getElementById('videoIframe').src = '';
+  }
 
-const themeSwitcher=document.getElementById('themeSwitcher'),themeIcon=document.getElementById('themeIcon'),themeText=document.getElementById('themeText');
-function setTheme(t){document.body.classList.remove('light','dark');document.body.classList.add(t);themeIcon.textContent=t==='light'?'🌞':'🌙';themeText.textContent=t==='light'?'Светлая тема':'Тёмная тема';localStorage.setItem('theme',t);}
-const saved=localStorage.getItem('theme');if(saved&&(saved==='light'||saved==='dark'))setTheme(saved);else setTheme(window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');
-themeSwitcher.addEventListener('click',function(){setTheme(document.body.classList.contains('dark')?'light':'dark');});
+  function openPhoto(src) {
+    const modal = document.getElementById('photoModal');
+    const img = document.getElementById('modalPhoto');
+    img.src = src;
+    modal.style.display = 'flex';
+  }
 
-function init(){renderApprovedActors();renderExtras();renderSeries();}
-init();
+  function closePhotoModal() {
+    document.getElementById('photoModal').style.display = 'none';
+    document.getElementById('modalPhoto').src = '';
+  }
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      if (document.getElementById('videoModal').style.display === 'flex') closeVideoModal();
+      if (document.getElementById('photoModal').style.display === 'flex') closePhotoModal();
+    }
+  });
+
+  // ================================================================
+  // ЗАПУСК
+  // ================================================================
+  renderApproved();
+  renderMainScreen();
 </script>
+
 </body>
 </html>
